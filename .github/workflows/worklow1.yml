@@ -16,9 +16,9 @@ jobs:
     - name: mkdir
       run: mkdir build
     - name: cmake build
-      run: cmake --preset linux-x64-releasee
+      run: cmake --preset linux-x64-release
     - name: cmake build
       run: cmake --build --preset linux-x64-release
     # run tests
     - name: run tests
-      run: ctest --test-dir ./build/linux-x64-release
+      run: ctest --test-dir ./build/linux-x64-release/test-prj
