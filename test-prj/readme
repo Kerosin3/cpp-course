@@ -1,0 +1,3 @@
+cmake --preset linux-x64-release
+cmake --build --preset linux-x64-release
+ctest --test-dir ./build/linux-x64-release
