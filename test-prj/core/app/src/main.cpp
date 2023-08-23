@@ -3,7 +3,9 @@
 #include <array>
 #include <boost/range/irange.hpp>
 #include <cassert>
+#include <csignal>
 #include <cstdint>
+#include <cstdlib>
 #include <cstring>
 #include <exampleZ/example_lib.hpp>
 #include <fmt/color.h>
@@ -44,14 +46,12 @@ static size_t ArrSize = 10;
 
 int main(int /*unused*/, char** /*unused*/)
 {
-    fmt::print("Hello, world!\n");
-    auto sharedp = std::make_shared<int>(42);
-    auto* arr1 = new Some_class[ArrSize];
-    for (auto i : boost::irange(0, 10))
-    {
-        arr1[i].attach(sharedp);
-        arr1[i].printout_shared();
+    int factor = 2;
+    auto multiplyByFactor = [=](int x) -> int { x*=x;
+    return x };
+    fmt::println("resul is {}", multiplyByFactor(10));
+    auto some1 = [](){
+        fmt::println("some function");
     };
-    delete[] arr1;
-    return 0;
+    some1();
 }
