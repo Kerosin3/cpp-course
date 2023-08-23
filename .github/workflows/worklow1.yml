@@ -24,18 +24,18 @@ jobs:
       shell: bash
       env:
        CC: clang-15
-       CXX: clang-15
+       CXX: clang++-15
     - name: cmake build
       run: cmake --build --preset linux-x64-release
       shell: bash
       env:
        CC: clang-15
-       CXX: clang-15
+       CXX: clang++-15
     # run tests
     - name: run tests
       run: ctest --test-dir ./build/linux-x64-release/test-prj
       shell: bash
       env:
        CC: clang-15
-       CXX: clang-15
+       CXX: clang++-15
 
