@@ -18,9 +18,10 @@ add_executable( ${TARGET} ${CPPS} ${HPPS} )
 # include includes
 target_include_directories( ${TARGET} PUBLIC ${INCLUDE_PATH} )
 # set features
-include(${CMAKE_SOURCE_DIR}/cmake.include/compile_features.cmake)
-include(${CMAKE_SOURCE_DIR}/cmake.include/funcs.cmake)
-include(${CMAKE_SOURCE_DIR}/cmake.include/colors.cmake)
+
+include(${ROOT_DIR_PRJ}/cmake.include/compile_features.cmake)
+include(${ROOT_DIR_PRJ}/cmake.include/funcs.cmake)
+include(${ROOT_DIR_PRJ}/cmake.include/colors.cmake)
 
 if (COMPILE_FEATURES)
 	message("${Green} COMPILE DIRECTIVES ARE SET FOR PROJECT >[${PROJECT_NAME}]< ${ColourReset}")
@@ -42,7 +43,7 @@ if (DOXYGEN_FOUND)
 	add_custom_target(doc_doxygen_${PROJECT_NAME} ALL
 		COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
 		WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
-		COMMENT "generating doc for networking"
+		COMMENT "Test Project 1"
 		VERBATIM
 	)
 else (DOXYGEN_FOUND)

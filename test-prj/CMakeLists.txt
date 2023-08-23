@@ -15,7 +15,13 @@ set(CMAKE_REQUIRED_DEFINITIONS -D_GNU_SOURCE)
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
-include(${CMAKE_SOURCE_DIR}/cmake.include/colors.cmake)
+
+#assign current dir
+get_filename_component(ROOT_DIR_PRJ
+	"${CMAKE_CURRENT_LIST_DIR}"
+	ABSOLUTE)
+
+include(${ROOT_DIR_PRJ}/cmake.include/colors.cmake)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -24,7 +30,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 #enable tests
 enable_testing()
 
-set(FETCHCONTENT_BASE_DIR ${CMAKE_SOURCE_DIR}/contrib)
+set(FETCHCONTENT_BASE_DIR ${ROOT_DIR_PRJ}/contrib)
 
 ##-------------
 FetchContent_Declare(googletest

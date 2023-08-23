@@ -21,9 +21,10 @@ add_executable( ${TARGET} ${CPPS} ${HPPS} )
 # include includes
 target_include_directories( ${TARGET} PUBLIC ${INCLUDE_PATH} )
 # set features
-include(${CMAKE_SOURCE_DIR}/cmake.include/compile_features.cmake)
-include(${CMAKE_SOURCE_DIR}/cmake.include/funcs.cmake)
-include(${CMAKE_SOURCE_DIR}/cmake.include/colors.cmake)
+include(${ROOT_DIR_PRJ}/cmake.include/compile_features.cmake)
+include(${ROOT_DIR_PRJ}/cmake.include/funcs.cmake)
+include(${ROOT_DIR_PRJ}/cmake.include/colors.cmake)
+
 include(GoogleTest)
 
 gtest_discover_tests(${TARGET})
