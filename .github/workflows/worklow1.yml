@@ -4,8 +4,10 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+env: 
+  prj_to_test: 'test-prj'
 jobs:
-  build:
+  build-and-run-test:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -19,7 +21,7 @@ jobs:
     # build project
     - name: mkdir
       run: mkdir build
-    - name: cmake build
+    - name: cmake preset
       run: cmake --preset linux-x64-release
       shell: bash
       env:
@@ -33,7 +35,7 @@ jobs:
        CXX: clang++-15
     # run tests
     - name: run tests
-      run: ctest --test-dir ./build/linux-x64-release/test-prj
+      run: ctest --test-dir ./build/linux-x64-release/${{ env.prj_to_test }}
       shell: bash
       env:
        CC: clang-15
