@@ -30,7 +30,8 @@ set_release(${PROJECT_NAME})
 #set executable name
 set_property(TARGET ${PROJECT_NAME} PROPERTY OUTPUT_NAME ${executable_name})
 ###########################
-
+IF (BUILD_DOCS)
+message("${CYAN} BUILDING DOCS FOR >[${PROJECT_NAME}]< ${ColourReset}")
 find_package(Doxygen 
 	     REQUIRED dot 
 	     OPTIONAL_COMPONENTS mscgen dia)
@@ -49,6 +50,7 @@ if (DOXYGEN_FOUND)
 else (DOXYGEN_FOUND)
 	message("doxygen not found")
 endif(DOXYGEN_FOUND)
+ENDIF()
 #include libraries
 set_target_properties(${TARGET} PROPERTIES INSTALL_RPATH "$ORIGIN")
 target_link_libraries(${PROJECT_NAME} 
