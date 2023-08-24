@@ -42,16 +42,14 @@ struct Some_class
 };
 std::string Some_class::d_name = "default name\n";
 
-static size_t ArrSize = 10;
+struct TestStruct{
+    int mem_m;
+    int another;
+    TestStruct(int initer,int a1) : mem_m(initer), another(a1){}
+};
+
 
 int main(int /*unused*/, char** /*unused*/)
 {
-    int factor = 2;
-    auto multiplyByFactor = [=](int x) -> int { x*=x;
-    return x };
-    fmt::println("resul is {}", multiplyByFactor(10));
-    auto some1 = [](){
-        fmt::println("some function");
-    };
-    some1();
+    auto t1 = TestStruct{50,60};
 }

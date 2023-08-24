@@ -43,3 +43,7 @@ TEST(Test_classes, Subtest_1)
     ASSERT_EQ(Rectangle1.get_area(), 150);
     ASSERT_EQ(Rectangle1.return_my_shape(), ShapeType::rectangle);
 }
+
+TEST(Test_classes, Subtest_2)
+{
+}
