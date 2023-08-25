@@ -40,10 +40,10 @@ void DumpHex(const void* data, size_t size)
     ascii[16] = '\0';
     for (i = 0; i < size; ++i)
     {
-        printf("%02X ", ((unsigned char*)data)[i]);
-        if (((unsigned char*)data)[i] >= ' ' && ((unsigned char*)data)[i] <= '~')
+        printf("%02X ", (static_cast<const unsigned char*>(data)[i]));
+        if ((static_cast<const unsigned char*>(data)[i]) >= ' ' && (static_cast<const unsigned char*>(data)[i]) <= '~')
         {
-            ascii[i % 16] = ((unsigned char*)data)[i];
+            ascii[i % 16] = static_cast<const char*>(data)[i];
         }
         else
         {

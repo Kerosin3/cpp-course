@@ -14,6 +14,7 @@
 #include <iostream>
 #include <iterator>
 #include <memory>
+#include <new>
 #include <optional>
 #include <spdlog/spdlog.h>
 #include <stdexcept>
@@ -42,14 +43,14 @@ struct Some_class
 };
 std::string Some_class::d_name = "default name\n";
 
-struct TestStruct{
-    int mem_m;
-    int another;
-    TestStruct(int initer,int a1) : mem_m(initer), another(a1){}
-};
-
+template <typename T> T My_Func(T x, T y)
+{
+    return (x > y) ? x : y;
+}
 
 int main(int /*unused*/, char** /*unused*/)
 {
-    auto t1 = TestStruct{50,60};
+    cout << My_Func(5, 10) << endl;
+    cout << My_Func(1.2, 5.6) << endl;
+    return EXIT_SUCCESS;
 }
