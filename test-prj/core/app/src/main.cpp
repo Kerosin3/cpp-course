@@ -22,6 +22,7 @@
 #include <stdexcept>
 #include <string>
 #include <string_view>
+#include <thread>
 #include <utility>
 #include <vector>
 
@@ -62,79 +63,55 @@ template <typename T> T add_something(T arg1, T arg2)
     return (arg1 > arg2) ? arg1 : arg2;
 }
 
-struct Struct1
+class MyStruct
 {
-    int valx = 0;
-    static inline size_t index = {1};
-    Struct1() = delete;
-    explicit(true) Struct1(int arg1) : valx{arg1} {}
-    Struct1(const Struct1& src) = delete;
-    Struct1& operator=(const Struct1& rhs) = delete;
+    int number = 0;
+    inline static size_t serial;
+    MyStruct() = delete;
 
-    void set_val(int arg)
+  public:
+    inline explicit MyStruct(int arg) : number{arg} {}
+    void set_number(int arg)
     {
-        this->valx = arg;
+        this->number = arg;
     }
-    void print_val() const
+    void print_number() const
     {
-        cout << "your value is " << this->valx << endl;
+        cout << "your number is " << this->number << endl;
     }
-    static void get_index()
+    static void print_serial()
     {
-        cout << "index is " << index << endl;
+        cout << "your serial is " << MyStruct::serial << endl;
+    }
+    [[nodiscard]] int get_value() const
+    {
+        return this->number;
+    }
+    MyStruct& operator+=(int rhs)
+    {
+        this->number += rhs;
+        return *this;
+    }
+    MyStruct& operator+=(const MyStruct& rhs)
+    {
+        cout << "overloading!" << endl;
+        this->number += rhs.number;
+        return *this;
+    }
+    MyStruct operator+(int arg) const
+    {
+        return MyStruct{this->get_value() + arg};
     }
 };
 
-inline int func1x(int a = 10, int b = 10)
+MyStruct operator+(const MyStruct& lsg, const MyStruct& rhs)
 {
-    return (a > b) ? a : b;
+    return MyStruct{rhs.get_value() + lsg.get_value()};
 }
 
-class Example1
+template <typename T> class Example
 {
-    int my_int = 0;
-
-  public:
-    enum class Color
-    {
-        Red,
-        Gree,
-        White,
-        Yellow
-    };
-
-  public:
-    Example1 operator+(const Example1& exmpl) const
-    {
-        return Example1{this->my_int, exmpl.my_int};
-    }
-    void print_data() const
-    {
-        cout << "your data is " << this->my_int << endl;
-    }
-
-  private:
-    explicit Example1(int a, int b)
-    {
-        this->my_int = a + b;
-    }
-
-  public:
-    explicit Example1(Color clr)
-    {
-        if (clr == Color::Red)
-        {
-            this->my_int = 42;
-        }
-        else
-        {
-            this->my_int = 1;
-        }
-    }
-    explicit Example1(int arg = 1)
-    {
-        this->my_int = arg;
-    }
+    T my_arg = {};
 };
 
 int main(int /*unused*/, char** /*unused*/)
@@ -142,17 +119,15 @@ int main(int /*unused*/, char** /*unused*/)
     cout << My_Func(5, 10) << endl;
     cout << My_Func(1.2, 5.6) << endl;
 
-    auto s = Struct1{24};
-    s.set_val(550);
-    s.print_val();
-
-    func1x();
-
-    auto x1 = Example1{Example1::Color::Red};
-    auto x2 = Example1{100};
-    x1.print_data();
-    x2.print_data();
-    auto x3 = x1 + x2;
-    x3.print_data();
+    auto m1 = MyStruct{0};
+    auto M2 = MyStruct{50};
+    m1.print_number();
+    m1 += 5;
+    m1.print_number();
+    m1 += M2;
+    m1.print_number();
+    auto t1 = m1 + 5;
+    cout << "dasda" << endl;
+    t1.print_number();
     return EXIT_SUCCESS;
 }
