@@ -108,11 +108,50 @@ MyStruct operator+(const MyStruct& lsg, const MyStruct& rhs)
 {
     return MyStruct{rhs.get_value() + lsg.get_value()};
 }
+class Iface1
+{
+  public:
+    [[nodiscard]] virtual int add_something(int arg1, int agr2) = 0;
+    virtual ~Iface1() = default;
+};
 
-template <typename T> class Example
+template <typename T> struct Example : public Iface1
 {
     T my_arg = {};
+    [[nodiscard]] int add_something(int arg1, int arg2) override
+    {
+        return arg1 + arg2;
+    }
+
+    Example() = default;
 };
+
+template <typename T> class Grid
+{
+  public:
+    explicit Grid(size_t width = d_widht, size_t height = d_height);
+    void printout()
+    {
+        fmt::println("data 1 {}, data 2 {}", m_width, m_height);
+    }
+    virtual ~Grid() = default;
+
+  private:
+    static const size_t d_widht{10};
+    static const size_t d_height{10};
+    size_t m_width{0}, m_height{0};
+};
+
+template <typename T> Grid<T>::Grid(size_t width, size_t height) : m_width{width}, m_height{height}
+{
+    cout << "default constructor" << endl;
+}
+
+template class Grid<int>;
+using IntGrid = Grid<int>;
+
+template class Grid<double>;
+using DouGrid = Grid<double>;
 
 int main(int /*unused*/, char** /*unused*/)
 {
@@ -129,5 +168,12 @@ int main(int /*unused*/, char** /*unused*/)
     auto t1 = m1 + 5;
     cout << "dasda" << endl;
     t1.print_number();
+
+    Example<int> myExample;
+    auto x = myExample.add_something(10, 20);
+
+    IntGrid MYGrid{};
+    MYGrid.printout();
+
     return EXIT_SUCCESS;
 }
