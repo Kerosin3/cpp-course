@@ -1,0 +1,51 @@
+cmake_minimum_required(VERSION 3.25)
+
+project(test_modules)
+
+set(CMAKE_GENERATOR "Ninja" CACHE INTERNAL "" FORCE)
+if (CMAKE_VERSION VERSION_LESS "3.26")
+    # 3.25
+    set(CMAKE_EXPERIMENTAL_CXX_MODULE_CMAKE_API "3c375311-a3c9-4396-a187-3227ef642046")
+elseif (CMAKE_VERSION VERSION_LESS "3.27")
+    # 3.26
+    set(CMAKE_EXPERIMENTAL_CXX_MODULE_CMAKE_API "2182bf5c-ef0d-489a-91da-49dbc3090d2a")
+else ()
+    message(FATAL_ERROR "See `https://github.com/Kitware/CMake/blob/v${CMAKE_VERSION}/Help/dev/experimental.rst`.")
+endif (CMAKE_VERSION VERSION_LESS "3.26")
+# turn on the dynamic depends for ninja
+set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD 20)
+
+string(CONCAT CMAKE_EXPERIMENTAL_CXX_SCANDEP_SOURCE
+  "<CMAKE_CXX_COMPILER> <DEFINES> <INCLUDES> <FLAGS> <SOURCE>"
+  " -MT <DYNDEP_FILE> -MD -MF <DEP_FILE>"
+  " ${flags_to_scan_deps}" 
+  " -fdep-file=<DYNDEP_FILE> -fdep-output=<OBJECT>"
+  )
+
+add_library(my_module_library)
+
+# MODULE SOURCE
+target_sources(
+        my_module_library
+        PRIVATE
+        FILE_SET module_files
+        TYPE CXX_MODULES
+        BASE_DIRS "${PROJECT_SOURCE_DIR}"
+        FILES
+
+        ${PROJECT_SOURCE_DIR}/src/my_module.ixx
+)
+
+# HEADER FILES
+target_sources(
+        my_module_library
+        PUBLIC
+        FILE_SET header_files
+        TYPE HEADERS
+        BASE_DIRS "${PROJECT_SOURCE_DIR}/src"
+        FILES
+
+        ${PROJECT_SOURCE_DIR}/src/my_header.hpp
+)

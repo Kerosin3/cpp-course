@@ -62,12 +62,14 @@ endif(DOXYGEN_FOUND)
 ENDIF()
 #include libraries
 
+add_library(my_module_library)
+
 set( SOURCE_PATH "${PROJECT_SOURCE_DIR}/src" )
 set( MODULES_PATH "${PROJECT_SOURCE_DIR}/modules" )
 
 # MODULE SOURCE
 target_sources(
-	${TARGET}
+	${lib1_to_add}
         PRIVATE
         FILE_SET module_files TYPE CXX_MODULES BASE_DIRS "${SOURCE_PATH}" FILES ${MODULES_PATH}/mod.ixx
 )

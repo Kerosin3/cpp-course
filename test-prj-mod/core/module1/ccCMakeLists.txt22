@@ -1,0 +1,37 @@
+cmake_minimum_required(VERSION 3.25)
+SET (CMAKE_CXX_COMPILER "/usr/bin/clang++-16" CACHE STRING "C++ compiler" FORCE)
+SET (CMAKE_C_COMPILER "/usr/bin/clang-16" CACHE STRING "C compiler" FORCE)
+
+project(std_module_example CXX)
+
+set(CMAKE_EXPERIMENTAL_CXX_MODULE_CMAKE_API "3c375311-a3c9-4396-a187-3227ef642046")
+
+set(CMAKE_GENERATOR "Ninja" CACHE INTERNAL "" FORCE)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+#string(CONCAT CMAKE_EXPERIMENTAL_CXX_SCANDEP_SOURCE
+#    "<CMAKE_CXX_COMPILER> <DEFINES> <INCLUDES> <FLAGS> <SOURCE>"
+#    " -MT <DYNDEP_FILE> -MD -MF <DEP_FILE>"
+#    " ${flags_to_scan_deps} -fdep-file=<DYNDEP_FILE> -fdep-output=<OBJECT>"
+#    )
+
+set(CMAKE_EXPERIMENTAL_CXX_MODULE_DYNDEP ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_CXX_STANDARD 20)
+
+if (CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+  include(gcc_modules.cmake)
+endif()
+
+set(CMAKE_CXX_STANDARD 20)
+add_library(foo)
+
+target_sources(foo
+  PUBLIC
+    FILE_SET cxx_modules TYPE CXX_MODULES FILES
+    ${PROJECT_SOURCE_DIR}/src/foo.cxx
+)
+
+add_executable(hello ${PROJECT_SOURCE_DIR}/src/main.cxx)
+
+target_link_libraries(hello PRIVATE foo)
