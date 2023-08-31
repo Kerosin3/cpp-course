@@ -30,6 +30,12 @@
 #include "version.h"
 #endif
 
+#ifndef __cplusplus
+#error C++ is required
+#elif __cplusplus < 202002L
+#error C++20 is required
+#endif
+
 using namespace std;
 
 struct Some_class
@@ -159,9 +165,10 @@ using DouGrid = Grid<double>;
 
 int main(int /*unused*/, char** /*unused*/)
 {
-    printf("verion is %d\n", PROJECT_VERSION_PATCH);
-    printf("verion is %d\n", PROJECT_VERSION_MINOR);
-    printf("verion is %d\n", PROJECT_VERSION_MAJOR);
+    std::cout << __cplusplus << std::endl;
+    printf("verion is %d\n", APP_MAJOR_VERSION);
+    printf("verion is %d\n", APP_MINOR_VERSION);
+    printf("verion is %d\n", APP_PATCH_VERSION);
     cout << My_Func(5, 10) << endl;
     cout << My_Func(1.2, 5.6) << endl;
 

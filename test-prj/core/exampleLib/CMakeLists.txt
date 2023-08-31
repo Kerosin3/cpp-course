@@ -7,6 +7,11 @@ set(MAJOR_VERSION "1" CACHE INTERNAL "Major version")
 set(PROJECT_VERSION ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
 
 set(libname "exampleZ")
+
+project(${libname} VERSION ${PROJECT_VERSION})
+
+string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPERCASE)
+string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWERCASE)
 #hardcode rpath
 #set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 #enable versioning
@@ -21,7 +26,6 @@ set(CMAKE_REQUIRED_DEFINITIONS -D_GNU_SOURCE)
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
-project(${libname} VERSION ${PROJECT_VERSION})
 # Load all the source file within the folder src
 set( TARGET ${PROJECT_NAME} )
 

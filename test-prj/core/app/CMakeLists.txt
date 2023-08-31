@@ -1,13 +1,17 @@
 cmake_minimum_required(VERSION 3.25)
 #set version
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
-set(MINOR_VERSION "1" CACHE INTERNAL "Minor version")
+set(MINOR_VERSION "0" CACHE INTERNAL "Minor version")
 set(MAJOR_VERSION "1" CACHE INTERNAL "Major version")
 
 set(PROJECT_VERSION ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
 
 project(app VERSION ${PROJECT_VERSION})
 set( TARGET ${PROJECT_NAME} )
+
+string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPERCASE)
+string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWERCASE)
+
 #enable versioning
 add_definitions(-D_VERSIONING=1)
 
