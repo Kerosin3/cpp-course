@@ -5,6 +5,11 @@
 #include <initializer_list>
 #include <iostream>
 #endif
+
+#ifdef _VERSIONING
+#include "version.h"
+#endif
+
 using my_int = int32_t;
 int run_me();
 int makeXsum(std::initializer_list<int> values);

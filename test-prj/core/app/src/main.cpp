@@ -1,5 +1,4 @@
 #include "lib1.hpp"
-#include "version.h"
 #include <algorithm>
 #include <array>
 #include <boost/range/irange.hpp>
@@ -26,6 +25,10 @@
 #include <thread>
 #include <utility>
 #include <vector>
+
+#ifdef _VERSIONING
+#include "version.h"
+#endif
 
 using namespace std;
 
@@ -156,6 +159,9 @@ using DouGrid = Grid<double>;
 
 int main(int /*unused*/, char** /*unused*/)
 {
+    printf("verion is %d\n", PROJECT_VERSION_PATCH);
+    printf("verion is %d\n", PROJECT_VERSION_MINOR);
+    printf("verion is %d\n", PROJECT_VERSION_MAJOR);
     cout << My_Func(5, 10) << endl;
     cout << My_Func(1.2, 5.6) << endl;
 

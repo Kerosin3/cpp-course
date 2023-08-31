@@ -1,10 +1,15 @@
 cmake_minimum_required(VERSION 3.25)
 #set version
 set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
-set(PROJECT_VERSION 1.0.${PATCH_VERSION})
+set(MINOR_VERSION "1" CACHE INTERNAL "Minor version")
+set(MAJOR_VERSION "1" CACHE INTERNAL "Major version")
 
+set(PROJECT_VERSION ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
 
 project(app VERSION ${PROJECT_VERSION})
+set( TARGET ${PROJECT_NAME} )
+#enable versioning
+add_definitions(-D_VERSIONING=1)
 
 configure_file(version.h.in version.h)
 #configure_file(version.h.in {PROJECT_SOURCE_DIR}/include/version.h)
@@ -14,7 +19,6 @@ set(lib1_to_add "exampleZ")
 # set executable output name
 set(executable_name "PROJECT1_EXEC")
 # Load all the source file within the folder src
-set( TARGET ${PROJECT_NAME} )
 # add include and sources
 set( SOURCE_PATH "${PROJECT_SOURCE_DIR}/src" )
 set( INCLUDE_PATH "${PROJECT_SOURCE_DIR}/include" )
@@ -39,6 +43,9 @@ target_include_directories( ${TARGET} PUBLIC ${INCLUDE_PATH} ${CMAKE_CURRENT_BIN
 include(${ROOT_DIR_PRJ}/cmake.include/compile_features.cmake)
 include(${ROOT_DIR_PRJ}/cmake.include/funcs.cmake)
 include(${ROOT_DIR_PRJ}/cmake.include/colors.cmake)
+include(${ROOT_DIR_PRJ}/cmake.include/platforms.cmake)
+
+set_defines_lin(${PROJECT_NAME})
 
 if (COMPILE_FEATURES)
 	message("${Green} COMPILE DIRECTIVES ARE SET FOR PROJECT >[${PROJECT_NAME}]< ${ColourReset}")
@@ -70,6 +77,7 @@ endif(DOXYGEN_FOUND)
 ENDIF()
 #include libraries
 set_target_properties(${TARGET} PROPERTIES INSTALL_RPATH "$ORIGIN")
+
 target_link_libraries(${PROJECT_NAME} 
 	${lib1_to_add}
 	spdlog::spdlog
