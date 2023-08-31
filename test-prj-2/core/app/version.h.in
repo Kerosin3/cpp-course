@@ -1,0 +1,7 @@
+#ifndef __VERSION
+#define __VERSION
+
+#cmakedefine PROJECT_VERSION_PATCH @PROJECT_VERSION_PATCH@
+#cmakedefine PROJECT_VERSION @PROJECT_VERSION@
+
+#endif

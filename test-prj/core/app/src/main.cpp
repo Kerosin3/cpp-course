@@ -1,4 +1,5 @@
 #include "lib1.hpp"
+#include "version.h"
 #include <algorithm>
 #include <array>
 #include <boost/range/irange.hpp>
