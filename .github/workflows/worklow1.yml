@@ -9,8 +9,6 @@ env:
 jobs:
   build-and-run-test:
     runs-on: ubuntu-latest
-    with:
-      submodules: true
     permissions: write-all
     steps:
     - uses: actions/checkout@v3
