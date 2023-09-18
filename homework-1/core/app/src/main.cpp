@@ -8,7 +8,7 @@
 #include <cstdint>
 #include <cstdlib>
 #include <cstring>
-#include <exampleZ/example_lib.hpp>
+#include <exampleLib/example_lib.hpp>
 #include <fmt/color.h>
 #include <fmt/core.h>
 #include <fmt/format.h>

@@ -20,7 +20,7 @@ configure_file(version.h.in version.h)
 #configure_file(version.h.in {PROJECT_SOURCE_DIR}/include/version.h)
 
 # specify library to link with
-set(lib1_to_add "exampleZ")
+set(lib1_to_add "exampleLib")
 # set executable output name
 set(executable_name "HOMEWORK1_EXEC")
 # Load all the source file within the folder src
@@ -69,6 +69,8 @@ else (DOXYGEN_FOUND)
 	message("doxygen not found")
 endif(DOXYGEN_FOUND)
 ENDIF()
+
+
 
 target_link_libraries(${PROJECT_NAME} 
 	${lib1_to_add}

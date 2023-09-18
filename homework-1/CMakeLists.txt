@@ -1,6 +1,3 @@
-
-# CMake build : global project (kind of solution)
-
 cmake_minimum_required(VERSION 3.25)
 
 set(CMAKE_GENERATOR "Ninja" CACHE INTERNAL "" FORCE)
@@ -9,19 +6,16 @@ set(CMAKE_PROJECT_NAME "HOMEWORK-1")
 #set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(MINOR_VERSION "0" CACHE INTERNAL "Minor version")
 set(MAJOR_VERSION "1" CACHE INTERNAL "Major version")
+
+if(PATCH_VERSION STREQUAL "")
+	set(PATCH_VERSION "0" CACHE INTERNAL "Patch version" FORCE)
+endif()
+
 set(PROJECT_VERSION ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
 
 project(HOMEWORK_1 VERSION ${PROJECT_VERSION})
 
 include(FetchContent)
-
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_REQUIRED_DEFINITIONS -D_GNU_SOURCE) 
-set(CMAKE_CXX_FLAGS_DEBUG "-g")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3")
-
 #assign current dir
 get_filename_component(ROOT_DIR_PRJ
 	"${CMAKE_CURRENT_LIST_DIR}"
@@ -70,6 +64,9 @@ find_package(Threads REQUIRED) # for pthread
 ## add dirictories
 add_subdirectory(core)
 add_subdirectory(tests)
+
+install(TARGETS app DESTINATION bin/)
+install(TARGETS exampleLib DESTINATION bin/)
 
 include(${ROOT_DIR_PRJ}/cmake.include/cpack.cmake)
 

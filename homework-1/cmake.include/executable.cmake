@@ -27,11 +27,13 @@ endif()
 
 if(UNIX)
     target_link_options(${PROJECT_NAME} PUBLIC "$<$<CONFIG:Release>:-s>") # удаляем отладочную информацию
-    set(CMAKE_SKIP_RPATH on) # отключим установку путей поиска Shared Library's
-    target_link_options(${PROJECT_NAME} PUBLIC "-Wl,-rpath=.") # выставим путь поиска '.'
+    # set if needs
+    #set(CMAKE_SKIP_RPATH on) # отключим установку путей поиска Shared Library's
+    #target_link_options(${PROJECT_NAME} PUBLIC "-Wl,-rpath=.") # выставим путь поиска '.'
     set(CMAKE_REQUIRED_DEFINITIONS -D_GNU_SOURCE) 
 endif()
 
+set_target_properties(${PROJECT_NAME} PROPERTIES INSTALL_RPATH "$ORIGIN")
 
 target_compile_features(${PROJECT_NAME} PUBLIC ${PROJECT_COMPILE_FEATURES})
 target_compile_definitions(${PROJECT_NAME} PUBLIC ${PROJECT_COMPILE_DEFINES})

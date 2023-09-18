@@ -6,7 +6,7 @@ set(MAJOR_VERSION "1" CACHE INTERNAL "Major version")
 
 set(PROJECT_VERSION ${MAJOR_VERSION}.${MINOR_VERSION}.${PATCH_VERSION})
 
-set(libname "exampleZ")
+set(libname "exampleLib")
 
 project(${libname} VERSION ${PROJECT_VERSION})
 
