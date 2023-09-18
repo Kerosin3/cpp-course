@@ -42,4 +42,5 @@ jobs:
       env:
        CC: clang-15
        CXX: clang++-15
+       GITHUB_RUN_N: ${{ github.run_number }}
 
