@@ -27,38 +27,26 @@ set(executable_name "HOMEWORK1_EXEC")
 # add include and sources
 set( SOURCE_PATH "${PROJECT_SOURCE_DIR}/src" )
 set( INCLUDE_PATH "${PROJECT_SOURCE_DIR}/include" )
-file( GLOB_RECURSE HPPS "${INCLUDE_PATH}/*.hpp" )
-file( GLOB_RECURSE CPPS "${SOURCE_PATH}/*.cpp" )
 ############################################
-# Define the executable of the application !
-#SET(CMAKE_INSTALL_RPATH "${LIBBAR_PATH}/lib")
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_REQUIRED_DEFINITIONS -D_GNU_SOURCE) 
-set(CMAKE_CXX_FLAGS_DEBUG "-g")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3")
-
-
-add_executable( ${TARGET} ${CPPS} ${HPPS} )
-# include includes + version
-target_include_directories( ${TARGET} PUBLIC ${INCLUDE_PATH} ${CMAKE_CURRENT_BINARY_DIR} )
+include(${ROOT_DIR_PRJ}/cmake.include/executable.cmake)
+set_executable(${PROJECT_NAME} ${INCLUDE_PATH} ${SOURCE_PATH} ${executable_name})
 # set features
-
 include(${ROOT_DIR_PRJ}/cmake.include/compile_features.cmake)
 include(${ROOT_DIR_PRJ}/cmake.include/funcs.cmake)
 include(${ROOT_DIR_PRJ}/cmake.include/colors.cmake)
 include(${ROOT_DIR_PRJ}/cmake.include/platforms.cmake)
-
+#set platform defines
 set_defines_lin(${PROJECT_NAME})
-
 if (COMPILE_FEATURES)
 	message("${Green} COMPILE DIRECTIVES ARE SET FOR PROJECT >[${PROJECT_NAME}]< ${ColourReset}")
 endif()
+#set executable
+include(${ROOT_DIR_PRJ}/cmake.include/executable.cmake)
+#set release
 set_release(${PROJECT_NAME})
-#set executable name
-set_property(TARGET ${PROJECT_NAME} PROPERTY OUTPUT_NAME ${executable_name})
+#setup executalbe
+
 ###########################
 IF (BUILD_DOCS)
 message("${CYAN} BUILDING DOCS FOR >[${PROJECT_NAME}]< ${ColourReset}")
@@ -81,11 +69,6 @@ else (DOXYGEN_FOUND)
 	message("doxygen not found")
 endif(DOXYGEN_FOUND)
 ENDIF()
-#include libraries
-#set_target_properties(${TARGET} PROPERTIES INSTALL_RPATH "$ORIGIN")
-
-set(CMAKE_INSTALL_RPATH ".")
-set(CMAKE_BUILD_WITH_INSTALL_RPATH true)
 
 target_link_libraries(${PROJECT_NAME} 
 	${lib1_to_add}

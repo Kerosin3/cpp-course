@@ -73,4 +73,3 @@ add_subdirectory(tests)
 
 include(${ROOT_DIR_PRJ}/cmake.include/cpack.cmake)
 
-#set_property(TARGET ${executable_name} PROPERTY OUTPUT_NAME prj1)
