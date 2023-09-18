@@ -21,7 +21,7 @@ TEST(TestGroupName, Subtest_1)
 
 TEST(TestGroupName, Subtest_2)
 {
-    auto env_variable{"FOO"};
+    auto env_variable{"GITHUB_RUN_N"};
     char* ret = getenv(env_variable);
     int patch = atoi(ret);
     ASSERT_EQ(get_build_n(), patch);
