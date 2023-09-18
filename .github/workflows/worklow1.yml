@@ -66,8 +66,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./_deb/${{ env.prj_to_test }}-1.0.${{ github.run_number }}-Linux.deb
-          asset_name: ${{ env.prj_to_test }}-1.0.${{ github.run_number }}-Linux.deb
+          asset_path: ./_deb/${{ env.prj_to_test.uppercase }}-1.0.${{ github.run_number }}-Linux.deb
+          asset_name: ${{ env.prj_to_test.uppercase }}-1.0.${{ github.run_number }}-Linux.deb
           asset_content_type: application/vnd.debian.binary-package
 
 
