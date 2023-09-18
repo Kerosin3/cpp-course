@@ -43,6 +43,11 @@ jobs:
        CC: clang-15
        CXX: clang++-15
        GITHUB_RUN_N: ${{ github.run_number }}
+    - name: pack deb
+      run: cmake --build build/linux-x64-release --target package
+      env:
+       CC: clang-15
+       CXX: clang++-15
     # add release
     - name: create release
       id: create_release
@@ -61,8 +66,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./HOMEWORK-1-1.0.${{ github.run_number }}-Linux.deb
-          asset_name: HOMEWORK-1-1.0.${{ github.run_number }}-Linux.deb
+          asset_path: ./_deb/${{ prj_to_test }}-1.0.${{ github.run_number }}-Linux.deb
+          asset_name: ${{ prj_to_test }}-1.0.${{ github.run_number }}-Linux.deb
           asset_content_type: application/vnd.debian.binary-package
 
 

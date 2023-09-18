@@ -22,7 +22,7 @@ configure_file(version.h.in version.h)
 # specify library to link with
 set(lib1_to_add "exampleZ")
 # set executable output name
-set(executable_name "PROJECT1_EXEC")
+set(executable_name "HOMEWORK1_EXEC")
 # Load all the source file within the folder src
 # add include and sources
 set( SOURCE_PATH "${PROJECT_SOURCE_DIR}/src" )
