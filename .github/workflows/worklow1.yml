@@ -61,13 +61,15 @@ jobs:
         prerelease: false
     - name: upload release assets
       id: upload-release-asset
+      run: echo "::set-output name=upperCasePrj::${PRJ_NAME_UPPER^^}"
       uses: actions/upload-release-asset@v1
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        PRJ_NAME_UPPER: ${{ env.prj_to_test }}
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./_deb/${{ env.prj_to_test.outputs.uppercase }}-1.0.${{ github.run_number }}-Linux.deb
-          asset_name: ${{ env.prj_to_test.outputs.uppercase }}-1.0.${{ github.run_number }}-Linux.deb
+          asset_path: ./_deb/${{ PRJ_NAME_UPPER }}-1.0.${{ github.run_number }}-Linux.deb
+          asset_name: ${{ PRJ_NAME_UPPER }}-1.0.${{ github.run_number }}-Linux.deb
           asset_content_type: application/vnd.debian.binary-package
 
 
