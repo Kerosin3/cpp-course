@@ -17,7 +17,7 @@ jobs:
       run: sudo apt-get update && sudo apt-get install -yq libboost-all-dev
     - name: ninja
       run: sudo apt-get install -yq ninja-build
-    - name: gcc
+    - name: install-clang
       run: sudo apt-get install -yq clang-15
     # build project
     - name: mkdir
@@ -28,6 +28,7 @@ jobs:
       env:
        CC: clang-15
        CXX: clang++-15
+       GITHUB_RUN_N: ${{ github.run_number }}
     - name: cmake build
       run: cmake --build --preset linux-x64-release
       shell: bash

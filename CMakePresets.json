@@ -14,7 +14,7 @@
 			"cacheVariables": {
 				"SOME_VAR": "ON",
 				"SOME_OTHER": "OFF",
-				"PATCH_VERSION": "$env{github.run_number}"
+				"PATCH_VERSION": "$env{GITHUB_RUN_N}"
 			}
 		},
 		{
