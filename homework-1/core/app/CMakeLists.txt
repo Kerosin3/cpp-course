@@ -40,6 +40,7 @@ set(CMAKE_REQUIRED_DEFINITIONS -D_GNU_SOURCE)
 set(CMAKE_CXX_FLAGS_DEBUG "-g")
 set(CMAKE_CXX_FLAGS_RELEASE "-O3")
 
+
 add_executable( ${TARGET} ${CPPS} ${HPPS} )
 # include includes + version
 target_include_directories( ${TARGET} PUBLIC ${INCLUDE_PATH} ${CMAKE_CURRENT_BINARY_DIR} )
@@ -81,7 +82,10 @@ else (DOXYGEN_FOUND)
 endif(DOXYGEN_FOUND)
 ENDIF()
 #include libraries
-set_target_properties(${TARGET} PROPERTIES INSTALL_RPATH "$ORIGIN")
+#set_target_properties(${TARGET} PROPERTIES INSTALL_RPATH "$ORIGIN")
+
+set(CMAKE_INSTALL_RPATH ".")
+set(CMAKE_BUILD_WITH_INSTALL_RPATH true)
 
 target_link_libraries(${PROJECT_NAME} 
 	${lib1_to_add}

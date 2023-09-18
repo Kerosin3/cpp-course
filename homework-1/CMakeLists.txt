@@ -28,7 +28,6 @@ get_filename_component(ROOT_DIR_PRJ
 	ABSOLUTE)
 
 include(${ROOT_DIR_PRJ}/cmake.include/colors.cmake)
-include(${ROOT_DIR_PRJ}/cmake.include/cpack.cmake)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
@@ -71,6 +70,7 @@ find_package(Threads REQUIRED) # for pthread
 ## add dirictories
 add_subdirectory(core)
 add_subdirectory(tests)
-#add_executable(${executable_name} app/src/main.cpp)
-#add_executable(${PROJECT1} ALIAS prj1_exe)
+
+include(${ROOT_DIR_PRJ}/cmake.include/cpack.cmake)
+
 #set_property(TARGET ${executable_name} PROPERTY OUTPUT_NAME prj1)
