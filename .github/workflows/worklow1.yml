@@ -5,12 +5,15 @@ on:
   pull_request:
     branches: [ main ]
 env: 
-  prj_to_test: 'test-prj'
+  prj_to_test: 'homework-1'
 jobs:
   build-and-run-test:
     runs-on: ubuntu-latest
+    with:
+      submodules: true
+    permissions: write-all
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
     # install dependencies
     - name: boost
       run: sudo apt-get update && sudo apt-get install -yq libboost-all-dev
