@@ -59,8 +59,7 @@ jobs:
         release_name: Release ${{ github.run_number }}
         draft: false
         prerelease: false
-    - name: toupper
-      id: toUpper
+    - id: toUpper
       run: echo "::set-output name=upperCasePrj::${PRJ_NAME_UPPER^^}"
       env:
         PRJ_NAME_UPPER: ${{ env.prj_to_test }}
@@ -71,8 +70,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./_deb/${{ PRJ_NAME_UPPER }}-1.0.${{ github.run_number }}-Linux.deb
-          asset_name: ${{ PRJ_NAME_UPPER }}-1.0.${{ github.run_number }}-Linux.deb
+          asset_path: ./_deb/${{ steps.toUpper.outputs.upperCasePrj }}-1.0.${{ github.run_number }}-Linux.deb
+          asset_name: ${{ steps.toUpper.outputs.upperCasePrj }}-1.0.${{ github.run_number }}-Linux.deb
           asset_content_type: application/vnd.debian.binary-package
 
 
