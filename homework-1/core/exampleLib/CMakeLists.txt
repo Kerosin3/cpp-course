@@ -17,13 +17,6 @@ add_definitions(-D_VERSIONING=1)
 
 configure_file(version.h.in version.h)
 
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_REQUIRED_DEFINITIONS -D_GNU_SOURCE) 
-set(CMAKE_CXX_FLAGS_DEBUG "-g")
-set(CMAKE_CXX_FLAGS_RELEASE "-O3")
-
 # Load all the source file within the folder src
 set( TARGET ${PROJECT_NAME} )
 
@@ -40,9 +33,5 @@ include(${ROOT_DIR_PRJ}/cmake.include/platforms.cmake)
 
 set_defines_lin(${PROJECT_NAME})
 
-
-if (COMPILE_FEATURES)
-	message("${Green} COMPILE DIRECTIVES ARE SET FOR PROJECT >[${PROJECT_NAME}]< ${ColourReset}")
-endif()
-set_release(${PROJECT_NAME})
+print_build_type(${PROJECT_NAME})
 

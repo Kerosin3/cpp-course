@@ -1,8 +1,5 @@
-macro(set_release prj_name)
-	if(NOT CMAKE_BUILD_TYPE)
-		set(CMAKE_BUILD_TYPE DEBUG)
-	  message("${Yellow} RELEASE BUILD TYPE FOR >[${prj_name}]< ${ColourReset}")
-	endif()
+macro(print_build_type prj_name)
+	message("${Yellow} BUILD TYPE FOR >[${prj_name}]< IS ${CMAKE_BUILD_TYPE} ${ColourReset}")
 endmacro()
 
 macro(add_boost prj_name)

@@ -38,13 +38,10 @@ include(${ROOT_DIR_PRJ}/cmake.include/colors.cmake)
 include(${ROOT_DIR_PRJ}/cmake.include/platforms.cmake)
 #set platform defines
 set_defines_lin(${PROJECT_NAME})
-if (COMPILE_FEATURES)
-	message("${Green} COMPILE DIRECTIVES ARE SET FOR PROJECT >[${PROJECT_NAME}]< ${ColourReset}")
-endif()
 #set executable
 include(${ROOT_DIR_PRJ}/cmake.include/executable.cmake)
 #set release
-set_release(${PROJECT_NAME})
+print_build_type(${PROJECT_NAME})
 #setup executalbe
 
 ###########################

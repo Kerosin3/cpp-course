@@ -29,10 +29,11 @@ include(GoogleTest)
 
 gtest_discover_tests(${TARGET})
 
-if (COMPILE_FEATURES)
-	message("${Green} COMPILE DIRECTIVES ARE SET FOR PROJECT >[${PROJECT_NAME}]< ${ColourReset}")
-endif()
-set_release(${PROJECT_NAME})
+include(${ROOT_DIR_PRJ}/cmake.include/executable.cmake)
+
+set_defines_lin(${PROJECT_NAME})
+
+print_build_type(${PROJECT_NAME})
 #set executable name
 set_property(TARGET ${PROJECT_NAME} PROPERTY OUTPUT_NAME ${executable_name})
 ###########################

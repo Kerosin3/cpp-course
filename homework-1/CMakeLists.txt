@@ -65,8 +65,15 @@ find_package(Threads REQUIRED) # for pthread
 add_subdirectory(core)
 add_subdirectory(tests)
 
-install(TARGETS app DESTINATION bin/)
-install(TARGETS exampleLib DESTINATION bin/)
-
 include(${ROOT_DIR_PRJ}/cmake.include/cpack.cmake)
+
+set(executable "app")
+set(lib1 "exampleLib")
+
+install(TARGETS ${executable} DESTINATION bin/)
+set_target_properties( ${executable} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/library )
+
+install(TARGETS ${lib1} DESTINATION library/)
+set_target_properties( ${executable} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/library )
+
 
