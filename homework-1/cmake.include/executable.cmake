@@ -26,7 +26,7 @@ if(WIN32 AND MINGW)
 endif()
 
 if(UNIX)
-	target_link_options(${PROJECT_NAME} PUBLIC "$<$<CONFIG:Release>:-s>") # удаляем отладочную информацию
+    target_link_options(${PROJECT_NAME} PUBLIC "$<$<CONFIG:Release>:-s>") # удаляем отладочную информацию
     # set if needs
     #set(CMAKE_SKIP_RPATH on) # отключим установку путей поиска Shared Library's
     #target_link_options(${PROJECT_NAME} PUBLIC "-Wl,-rpath=.") # выставим путь поиска '.'

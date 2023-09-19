@@ -71,9 +71,9 @@ set(executable "app")
 set(lib1 "exampleLib")
 
 install(TARGETS ${executable} DESTINATION bin/)
-set_target_properties( ${executable} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/library )
+set_target_properties( ${executable} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/lib/${CMAKE_PROJECT_NAME} )
 
-install(TARGETS ${lib1} DESTINATION library/)
-set_target_properties( ${executable} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/library )
+install(TARGETS ${lib1} DESTINATION lib/${CMAKE_PROJECT_NAME})
+set_target_properties( ${lib1} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/lib/${CMAKE_PROJECT_NAME} )
 
 
