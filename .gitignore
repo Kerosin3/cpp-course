@@ -2,7 +2,7 @@
 .idea/
 .vs/
 .vscode/
-._deb/
+_deb/
 build/
 _build/
 cmake-build-*/
