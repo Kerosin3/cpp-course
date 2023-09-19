@@ -13,9 +13,8 @@
 			"binaryDir": "${sourceDir}/build/${presetName}",
 			"cacheVariables": {
 				"SOME_VAR": "ON",
-				"BUILD_DOCS": "OFF",
 				"SOME_OTHER": "OFF",
-				"PATCH_VERSION": "$env{FOO}"
+				"PATCH_VERSION": "$env{GITHUB_RUN_N}"
 			}
 		},
 		{
