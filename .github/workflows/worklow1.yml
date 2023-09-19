@@ -1,9 +1,12 @@
 name: build and run tests
 on:
   push:
-    branches: [ main ]
+    branches: 
+      - main
+      - 'HW*'
   pull_request:
-    branches: [ main ]
+      - main
+      - 'HW*'
 env: 
   prj_to_test: 'homework-1'
 jobs:
