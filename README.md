@@ -30,3 +30,7 @@
 ### Packing to deb
 
 `cpack --config build/linux-x64-release/CPackConfig.cmake`
+
+#### Running
+
+Execute is shell `HOMEWORK1_EXEC`
