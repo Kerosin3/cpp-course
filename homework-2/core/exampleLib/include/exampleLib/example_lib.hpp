@@ -6,9 +6,9 @@
 #include <fstream>
 #include <iostream>
 #include <iterator>
+#include <limits>
 #include <sstream>
 #include <vector>
-#include <limits>
 #endif
 
 #ifdef _VERSIONING
@@ -26,6 +26,7 @@ class Filtering
     Filtering() = delete;
     Filtering(std::ifstream& cin_stream) : cinstream(cin_stream){};
     void somefunc();
+    void printout();
 };
 // returns true is str1 <= str2 with atoi()
 bool compare_strings(const std::string& str1, const std::string& str2);

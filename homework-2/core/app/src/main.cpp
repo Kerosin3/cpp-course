@@ -56,5 +56,9 @@ void read(std::istream& fp)
 int main(int argc, char* argv[])
 {
     // read(std::cin);
+    std::ifstream cinstream("ip_filter.tsv");
+    Filtering filter1(cinstream);
+    filter1.somefunc();
+    filter1.printout();
     return EXIT_SUCCESS;
 }
