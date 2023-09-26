@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.25)
 
 set(CMAKE_GENERATOR "Ninja" CACHE INTERNAL "" FORCE)
 
-set(CMAKE_PROJECT_NAME "HOMEWORK-1")
+set(CMAKE_PROJECT_NAME "HOMEWORK-2")
 #set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(MINOR_VERSION "0" CACHE INTERNAL "Minor version")
 set(MAJOR_VERSION "1" CACHE INTERNAL "Major version")
@@ -67,12 +67,12 @@ add_subdirectory(tests)
 
 include(${ROOT_DIR_PRJ}/cmake.include/cpack.cmake)
 
-set(executable "app")
-set(lib1 "exampleLib")
 
+set(executable "app")
 install(TARGETS ${executable} DESTINATION bin/)
 set_target_properties( ${executable} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/lib/${CMAKE_PROJECT_NAME} )
 
+set(lib1 "exampleLib")
 install(TARGETS ${lib1} DESTINATION lib/${CMAKE_PROJECT_NAME})
 set_target_properties( ${lib1} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/lib/${CMAKE_PROJECT_NAME} )
 

@@ -1,10 +1,11 @@
-# HOMEWORK-1
+# HOMEWORK-2
 
 ## Min. Requirements
 
 + Git
 + Ninja 1.10
 + Cmake 3.25
++ C++20 support compiler
 
 ### Configure
 
@@ -25,7 +26,7 @@
 
 #### Linux x86_64
 
-`ctest --test-dir ./build/linux-x64-release/homework-1`
+`ctest --test-dir ./build/linux-x64-release/homework-2`
 
 ### Packing to deb
 
@@ -33,4 +34,4 @@
 
 #### Running
 
-Execute is shell `HOMEWORK1_EXEC`
+Execute is shell `HOMEWORK2_EXEC`

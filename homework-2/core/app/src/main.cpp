@@ -1,6 +1,7 @@
 #include "lib1.hpp"
 #include <algorithm>
 #include <array>
+#include <bitset>
 #include <boost/range/irange.hpp>
 #include <cassert>
 #include <csignal>
@@ -12,13 +13,16 @@
 #include <fmt/color.h>
 #include <fmt/core.h>
 #include <fmt/format.h>
+#include <fstream>
 #include <initializer_list>
 #include <iostream>
+#include <istream>
 #include <iterator>
 #include <memory>
 #include <new>
 #include <optional>
 #include <spdlog/spdlog.h>
+#include <sstream>
 #include <stdexcept>
 #include <string>
 #include <string_view>
@@ -37,13 +41,20 @@
 #endif
 
 using namespace std;
-int main(int /*unused*/, char** /*unused*/)
+
+void read(std::istream& fp)
 {
-    // printf("verion is %d\n", APP_MAJOR_VERSION);
-    // printf("verion is %d\n", APP_MINOR_VERSION);
-    // printf("verion is %d\n", APP_PATCH_VERSION);
-    cout << "####################################" << endl;
-    cout << "build " << get_build_n() << endl;
-    cout << "Hello, World!" << endl;
+    while (!fp.eof())
+    {
+        std::string line;
+        std::getline(fp, line);
+        std::cout << line << std::endl;
+        ;
+    }
+}
+
+int main(int argc, char* argv[])
+{
+    // read(std::cin);
     return EXIT_SUCCESS;
 }
