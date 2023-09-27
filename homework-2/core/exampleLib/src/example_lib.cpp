@@ -18,15 +18,36 @@ void Filtering::sort_descending()
     });
 }
 
-void Filtering::printout(uint8_t BytePattern, unsigned ByteToTest)
+void Filtering::printout(uint8_t BytePattern, unsigned short ByteToTest)
 {
     cout << " TESTNG" << endl;
     for (const auto& anIp : this->input_lines)
     {
-        if (filter_by_byte(anIp, BytePattern, BytePlace::first))
+        bool TestValue = false;
+        switch (ByteToTest)
         {
-
-            cout << anIp << endl;
+        case 0b1:
+            TestValue = (filter_by_byte(anIp, BytePattern, BytePlace::first));
+            break;
+        case 0b10:
+            TestValue = (filter_by_byte(anIp, BytePattern, BytePlace::second));
+            break;
+        case 0b100:
+            TestValue = (filter_by_byte(anIp, BytePattern, BytePlace::third));
+            break;
+        case 0b1000:
+            TestValue = (filter_by_byte(anIp, BytePattern, BytePlace::forth));
+            break;
+        default:
+            break;
+        }
+        if (TestValue)
+        {
+            (cout << anIp << endl);
+        }
+        else
+        {
+            continue;
         }
     }
 }
@@ -39,7 +60,7 @@ void Filtering::printout()
     }
 }
 
-bool filter_by_byte(const std::string& str, uint8_t byte, unsigned place)
+bool filter_by_byte(const std::string& str, uint8_t byte, unsigned short place)
 {
     auto ConvertedStringToNumber = convert(str);
     std::uint32_t ZerosMask{0x000000FF};

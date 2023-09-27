@@ -38,13 +38,15 @@ class Filtering
     void read_input();
     void sort_descending();
     void printout();
-    void printout(uint8_t, unsigned);
+    void printout(uint8_t, unsigned short);
 };
 
 // returns true is str1 <= str2 using atoi()
 bool compare_strings(const std::string& str1, const std::string& str2);
+
 // true if specified byte position matches specified byte value
-bool filter_by_byte(const std::string& str, uint8_t byte, unsigned place);
+bool filter_by_byte(const std::string& str, uint8_t byte, unsigned short place);
+
 // convert ipv4 string with . delimiter to hex representation
 inline uint32_t convert(const std::string& ipv4Str)
 {
