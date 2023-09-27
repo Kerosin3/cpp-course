@@ -18,6 +18,14 @@
 #endif
 
 using namespace std;
+// specity which byte from ip to test
+enum BytePlace : unsigned short
+{
+    first = 0x1,
+    second = 0x2,
+    third = 0x4,
+    forth = 0x8,
+};
 
 class Filtering
 {
@@ -30,19 +38,13 @@ class Filtering
     void read_input();
     void sort_descending();
     void printout();
+    void printout(uint8_t, unsigned);
 };
+
 // returns true is str1 <= str2 using atoi()
 bool compare_strings(const std::string& str1, const std::string& str2);
-// specity which byte from ip to test
-enum BytePlace : unsigned short
-{
-    first = 0,
-    second,
-    third,
-    forth,
-};
 // true if specified byte position matches specified byte value
-bool filter_by_byte(const std::string& str, uint8_t byte, BytePlace place);
+bool filter_by_byte(const std::string& str, uint8_t byte, unsigned place);
 // convert ipv4 string with . delimiter to hex representation
 inline uint32_t convert(const std::string& ipv4Str)
 {

@@ -17,24 +17,40 @@ void Filtering::sort_descending()
         return !compare_strings(str1, str2);
     });
 }
-bool filter_by_byte(const std::string& str, uint8_t byte, BytePlace place)
-{
-    auto ConvertedStringToNumber = convert(str);
-    std::uint32_t ZerosMask{0x000000FF};
 
-    ZerosMask <<= place * 8;                                                // shift mask
-    uint32_t Masked = (ConvertedStringToNumber & ZerosMask) >> (place * 8); // mask off and shift right
-    return (!((Masked) ^ byte)) ? true : false;
+void Filtering::printout(uint8_t BytePattern, unsigned ByteToTest)
+{
+    cout << " TESTNG" << endl;
+    for (const auto& anIp : this->input_lines)
+    {
+        if (filter_by_byte(anIp, BytePattern, BytePlace::first))
+        {
+
+            cout << anIp << endl;
+        }
+    }
 }
 
 void Filtering::printout()
 {
     for (const auto& anIp : this->input_lines)
     {
-        uint32_t anIphex = convert(anIp);
-
         cout << anIp << endl;
     }
+}
+
+bool filter_by_byte(const std::string& str, uint8_t byte, unsigned place)
+{
+    auto ConvertedStringToNumber = convert(str);
+    std::uint32_t ZerosMask{0x000000FF};
+    uint8_t ShiftValue = place >> 1;
+    if (place == BytePlace::forth)
+    {
+        ShiftValue = 3;
+    }
+    ZerosMask <<= ShiftValue * 8;                                                // shift mask
+    uint32_t Masked = (ConvertedStringToNumber & ZerosMask) >> (ShiftValue * 8); // mask off and shift right
+    return (!((Masked) ^ byte)) ? true : false;
 }
 
 bool compare_strings(const std::string& str1, const std::string& str2)

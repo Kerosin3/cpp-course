@@ -61,5 +61,6 @@ int main(int argc, char* argv[])
     filter1.read_input();
     filter1.sort_descending();
     filter1.printout();
+    filter1.printout(81, 0x1);
     return EXIT_SUCCESS;
 }

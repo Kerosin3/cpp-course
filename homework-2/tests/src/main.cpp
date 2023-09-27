@@ -124,5 +124,11 @@ TEST(test_comparision, test13)
 {
     const auto str1{"93.179.90.82"};
     //   5D-B3-5A-52//
+    ASSERT_EQ(true, filter_by_byte(str1, 179, BytePlace::third));
+}
+TEST(test_comparision, test14)
+{
+    const auto str1{"93.179.90.82"};
+    //   5D-B3-5A-52//
     ASSERT_EQ(true, filter_by_byte(str1, 93, BytePlace::forth));
 }
