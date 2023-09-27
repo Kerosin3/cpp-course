@@ -31,6 +31,8 @@ class Filtering
 {
     std::ifstream& cinstream;
     std::vector<std::string> input_lines;
+    std::vector<std::string> tmp_storage;
+    bool sequence{false};
 
   public:
     Filtering() = delete;
@@ -39,12 +41,18 @@ class Filtering
     void sort_descending();
     void printout();
     void printout(uint8_t, unsigned short);
+    void reset_sequence()
+    {
+        this->sequence = false;
+        this->tmp_storage.clear();
+    }
 };
 
 // returns true is str1 <= str2 using atoi()
 bool compare_strings(const std::string& str1, const std::string& str2);
 
 // true if specified byte position matches specified byte value
+
 bool filter_by_byte(const std::string& str, uint8_t byte, unsigned short place);
 
 // convert ipv4 string with . delimiter to hex representation

@@ -95,7 +95,6 @@ TEST(test_comparision, test8)
         uint32_t masked = rezult & zeros_mask;
         if (!((masked) ^ check))
         {
-            cout << "pattern match" << endl;
             xvar = true;
         }
     }
@@ -131,4 +130,10 @@ TEST(test_comparision, test14)
     const auto str1{"93.179.90.82"};
     //   5D-B3-5A-52//
     ASSERT_EQ(true, filter_by_byte(str1, 93, BytePlace::forth));
+}
+TEST(test_comparision, test15)
+{
+    const auto str1{"93.179.90.82"};
+    //   5D-B3-5A-52//
+    ASSERT_EQ(false, filter_by_byte(str1, 93, BytePlace::first));
 }

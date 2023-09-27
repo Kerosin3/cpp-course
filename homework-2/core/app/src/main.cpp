@@ -61,6 +61,23 @@ int main(int argc, char* argv[])
     filter1.read_input();
     filter1.sort_descending();
     filter1.printout();
-    filter1.printout(81, 0x1);
+    //  filter1.printout(1, BytePlace::first);
+    // filter1.printout();
+    // filter1.reset_sequence();
+    //     filter1.printout(46, BytePlace::first);
+    //     filter1.printout(70, BytePlace::second);
+    //     filter1.printout();
+
+    //     filter1.reset_sequence();
+    filter1.printout(46, BytePlace::first);
+    filter1.printout();
+    filter1.printout(46, BytePlace::second);
+    filter1.printout();
+    filter1.printout(46, BytePlace::third);
+    filter1.printout();
+    filter1.printout(46, BytePlace::forth);
+    filter1.printout();
+    filter1.reset_sequence();
+
     return EXIT_SUCCESS;
 }

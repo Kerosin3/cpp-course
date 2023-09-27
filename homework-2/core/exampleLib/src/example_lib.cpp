@@ -20,41 +20,29 @@ void Filtering::sort_descending()
 
 void Filtering::printout(uint8_t BytePattern, unsigned short ByteToTest)
 {
-    cout << " TESTNG" << endl;
-    for (const auto& anIp : this->input_lines)
+    cout << "----------" << endl;
+    auto& src = (this->sequence) ? this->tmp_storage : this->input_lines;
+    for (const auto& anIp : src)
     {
-        bool TestValue = false;
-        switch (ByteToTest)
-        {
-        case 0b1:
-            TestValue = (filter_by_byte(anIp, BytePattern, BytePlace::first));
-            break;
-        case 0b10:
-            TestValue = (filter_by_byte(anIp, BytePattern, BytePlace::second));
-            break;
-        case 0b100:
-            TestValue = (filter_by_byte(anIp, BytePattern, BytePlace::third));
-            break;
-        case 0b1000:
-            TestValue = (filter_by_byte(anIp, BytePattern, BytePlace::forth));
-            break;
-        default:
-            break;
-        }
+        auto TestValue = filter_by_byte(anIp, BytePattern, ByteToTest);
         if (TestValue)
         {
-            (cout << anIp << endl);
+            // append to tmp_storage
+            this->tmp_storage.push_back(anIp);
         }
         else
         {
             continue;
         }
     }
+    this->sequence = true;
 }
 
 void Filtering::printout()
 {
-    for (const auto& anIp : this->input_lines)
+
+    auto& src = (this->sequence) ? this->tmp_storage : this->input_lines;
+    for (const auto& anIp : src)
     {
         cout << anIp << endl;
     }
@@ -64,7 +52,6 @@ bool filter_by_byte(const std::string& str, uint8_t byte, unsigned short place)
 {
     auto ConvertedStringToNumber = convert(str);
     std::uint32_t ZerosMask{0x000000FF};
-
     for (size_t index = 0; index < 4; index++)
     {
         unsigned short Position = place;
@@ -75,7 +62,6 @@ bool filter_by_byte(const std::string& str, uint8_t byte, unsigned short place)
 
             ZerosMask <<= index * 8;
             uint32_t Masked = (ConvertedStringToNumber & ZerosMask) >> (index * 8); // mask off and shift right
-
             return (!((Masked) ^ byte)) ? true : false;
         }
         else
