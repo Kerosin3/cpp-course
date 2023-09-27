@@ -64,14 +64,26 @@ bool filter_by_byte(const std::string& str, uint8_t byte, unsigned short place)
 {
     auto ConvertedStringToNumber = convert(str);
     std::uint32_t ZerosMask{0x000000FF};
-    uint8_t ShiftValue = place >> 1;
-    if (place == BytePlace::forth)
+
+    for (size_t index = 0; index < 4; index++)
     {
-        ShiftValue = 3;
+        unsigned short Position = place;
+        Position >>= index;
+        // this bit is set
+        if (Position & 0x1)
+        {
+
+            ZerosMask <<= index * 8;
+            uint32_t Masked = (ConvertedStringToNumber & ZerosMask) >> (index * 8); // mask off and shift right
+
+            return (!((Masked) ^ byte)) ? true : false;
+        }
+        else
+        {
+            // just skip
+            continue;
+        }
     }
-    ZerosMask <<= ShiftValue * 8;                                                // shift mask
-    uint32_t Masked = (ConvertedStringToNumber & ZerosMask) >> (ShiftValue * 8); // mask off and shift right
-    return (!((Masked) ^ byte)) ? true : false;
 }
 
 bool compare_strings(const std::string& str1, const std::string& str2)
