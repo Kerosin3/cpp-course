@@ -48,3 +48,81 @@ TEST(test_comparision, test4)
     const auto str2{"186.46.222.194"s};
     ASSERT_FALSE(compare_strings(str1, str2));
 }
+TEST(test_comparision, test5)
+{
+    // second is greater -> true
+    const auto str1{"220.42.146.225"s};
+    const auto str2{"220.189.194.162"s};
+    ASSERT_TRUE(compare_strings(str1, str2));
+}
+TEST(test_comparision, test6)
+{
+    // second is greater -> true
+    const auto str1{"255.255.255.255"};
+    uint32_t rezult = convert(str1);
+    ASSERT_EQ(4294967295, rezult);
+}
+TEST(test_comparision, test7)
+{
+    // second is greater -> true
+    const auto str1{"93.179.90.82"};
+    //   5D-B3-5A-52//
+    uint32_t anws{0x5DB35A52};
+    uint32_t rezult = convert(str1);
+    ASSERT_EQ(anws, rezult);
+}
+TEST(test_comparision, test9)
+{
+    // second is greater -> true
+    const auto str1{"93.179.90.83"};
+    //   5D-B3-5A-52//
+    uint32_t anws{0x5DB35A53};
+    uint32_t rezult = convert(str1);
+    ASSERT_EQ(anws, rezult);
+}
+
+TEST(test_comparision, test8)
+{
+    const auto str1{"93.179.90.83"};
+    //   5D-B3-5A-52//
+    uint32_t rezult = convert(str1);
+    bool xvar = false;
+    constexpr std::uint8_t zeros_mask{0x000000FF};
+    constexpr std::uint8_t check{83};
+    for (size_t i = 0; i < 1; i++)
+    {
+        rezult >>= (i * 8); // shift right
+        uint32_t masked = rezult & zeros_mask;
+        if (!((masked) ^ check))
+        {
+            cout << "pattern match" << endl;
+            xvar = true;
+        }
+    }
+    ASSERT_EQ(true, xvar);
+}
+
+TEST(test_comparision, test10)
+{
+    const auto str1{"93.179.90.83"};
+    //   5D-B3-5A-53//
+    ASSERT_EQ(true, filter_by_byte(str1, 83, BytePlace::first));
+}
+TEST(test_comparision, test11)
+{
+    const auto str1{"93.179.90.82"};
+    //   5D-B3-5A-52//
+    ASSERT_EQ(false, filter_by_byte(str1, 83, BytePlace::first));
+}
+TEST(test_comparision, test12)
+{
+    const auto str1{"93.179.90.82"};
+    //   5D-B3-5A-52//
+    ASSERT_EQ(true, filter_by_byte(str1, 90, BytePlace::second));
+}
+TEST(test_comparision, test13)
+{
+    const auto str1{"93.179.90.82"};
+    //   5D-B3-5A-52//
+    ASSERT_EQ(true, filter_by_byte(str1, 93, BytePlace::forth));
+}

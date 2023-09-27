@@ -1,7 +1,7 @@
 #include "exampleLib/example_lib.hpp"
 using namespace std;
 
-void Filtering::somefunc()
+void Filtering::read_input()
 {
     std::string InputLine;
     while (std::getline(this->cinstream, InputLine))
@@ -9,16 +9,30 @@ void Filtering::somefunc()
         auto DelimPosition = InputLine.find('\t');
         this->input_lines.emplace_back(InputLine.substr(0, DelimPosition));
     }
+}
+
+void Filtering::sort_descending()
+{
     std::sort(this->input_lines.begin(), this->input_lines.end(), [](const std::string& str1, const std::string& str2) {
         return !compare_strings(str1, str2);
     });
 }
+bool filter_by_byte(const std::string& str, uint8_t byte, BytePlace place)
+{
+    auto ConvertedStringToNumber = convert(str);
+    std::uint32_t ZerosMask{0x000000FF};
+
+    ZerosMask <<= place * 8;                                                // shift mask
+    uint32_t Masked = (ConvertedStringToNumber & ZerosMask) >> (place * 8); // mask off and shift right
+    return (!((Masked) ^ byte)) ? true : false;
+}
 
 void Filtering::printout()
 {
-    cout << "11111111111" << endl;
     for (const auto& anIp : this->input_lines)
     {
+        uint32_t anIphex = convert(anIp);
+
         cout << anIp << endl;
     }
 }
@@ -49,11 +63,11 @@ bool compare_strings(const std::string& str1, const std::string& str2)
         }
         else // equal
         {
+            String1.clear();
+            String2.clear();
+            index++;
             continue;
         }
-        String1.clear();
-        String2.clear();
-        index++;
     };
     return false;
 }
