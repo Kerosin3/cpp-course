@@ -20,22 +20,25 @@ void Filtering::sort_descending(vector<string>& src)
 
 Filtering& Filtering::filter_this(uint8_t BytePattern, unsigned short ByteToTest)
 {
-    cout << "------" << endl;
+
     auto& src = (this->sequence) ? this->tmp_storage : this->input_lines;
     auto it = src.begin();
     while (it != src.end())
     {
         auto TestValue = filter_by_byte(*it, BytePattern, ByteToTest);
-        if (TestValue)
+        if (this->sequence)
         {
-            // wrotking with full
-            if (!this->sequence)
-            {
-                this->tmp_storage.push_back(*it);
-            }
-            else
+            if (!TestValue)
             {
                 this->tmp_storage.erase(it);
+                continue;
+            }
+        }
+        else
+        {
+            if (TestValue)
+            {
+                this->tmp_storage.push_back(*it);
             }
         }
         it++;
@@ -56,26 +59,42 @@ void Filtering::printout()
 
 bool filter_by_byte(const std::string& str, uint8_t byte, unsigned short place)
 {
+    // convert string to number
     auto ConvertedStringToNumber = convert(str);
-    std::uint32_t ZerosMask{0x000000FF};
+    // mask to shift
     for (size_t index = 0; index < 4; index++)
     {
         unsigned short Position = place;
+        // iterate over bitmask enum
         Position >>= index;
-        // this bit is set
+        // decide if this bit should be tested
         if (Position & 0x1)
         {
-
+            // bitmask
+            std::uint32_t ZerosMask{0x000000FF};
+            // adjust bitmask
             ZerosMask <<= index * 8;
+            // mask off
             uint32_t Masked = (ConvertedStringToNumber & ZerosMask) >> (index * 8); // mask off and shift right
-            return (!((Masked) ^ byte)) ? true : false;
-        }
-        else
-        {
-            // just skip
-            continue;
+            auto Match = (!((Masked) ^ byte));
+            if (place != BytePlace::any)
+            {
+                return Match;
+            }
+            else
+            {
+                if (Match)
+                {
+                    return true;
+                }
+                else
+                {
+                    continue;
+                }
+            }
         }
     }
+    return false; // default
 }
 
 bool compare_strings(const std::string& str1, const std::string& str2)

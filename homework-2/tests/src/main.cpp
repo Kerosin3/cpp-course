@@ -105,35 +105,72 @@ TEST(test_comparision, test10)
 {
     const auto str1{"93.179.90.83"};
     //   5D-B3-5A-53//
-    ASSERT_EQ(true, filter_by_byte(str1, 83, BytePlace::first));
+    ASSERT_EQ(true, filter_by_byte(str1, 83, BytePlace::forth));
 }
 TEST(test_comparision, test11)
 {
     const auto str1{"93.179.90.82"};
     //   5D-B3-5A-52//
-    ASSERT_EQ(false, filter_by_byte(str1, 83, BytePlace::first));
+    ASSERT_EQ(false, filter_by_byte(str1, 83, BytePlace::forth));
 }
 TEST(test_comparision, test12)
 {
     const auto str1{"93.179.90.82"};
     //   5D-B3-5A-52//
-    ASSERT_EQ(true, filter_by_byte(str1, 90, BytePlace::second));
+    ASSERT_EQ(true, filter_by_byte(str1, 90, BytePlace::third));
 }
 TEST(test_comparision, test13)
 {
     const auto str1{"93.179.90.82"};
     //   5D-B3-5A-52//
-    ASSERT_EQ(true, filter_by_byte(str1, 179, BytePlace::third));
+    ASSERT_EQ(true, filter_by_byte(str1, 179, BytePlace::second));
 }
 TEST(test_comparision, test14)
 {
     const auto str1{"93.179.90.82"};
     //   5D-B3-5A-52//
-    ASSERT_EQ(true, filter_by_byte(str1, 93, BytePlace::forth));
+    ASSERT_EQ(true, filter_by_byte(str1, 93, BytePlace::first));
 }
 TEST(test_comparision, test15)
 {
     const auto str1{"93.179.90.82"};
     //   5D-B3-5A-52//
-    ASSERT_EQ(false, filter_by_byte(str1, 93, BytePlace::first));
+    ASSERT_EQ(false, filter_by_byte(str1, 93, BytePlace::forth));
+}
+TEST(test_comparision, test16)
+{
+    const auto str1{"90.179.93.82"};
+    //   5D-B3-5A-52//
+    ASSERT_EQ(true, filter_by_byte(str1, 93, BytePlace::any));
+}
+TEST(test_comparision, test17)
+{
+    const auto str1{"92.179.90.82"};
+    //   5D-B3-5A-52//
+    ASSERT_EQ(false, filter_by_byte(str1, 93, BytePlace::any));
+}
+
+TEST(test_comparision, test19)
+{
+    const auto str1{"91.90.93.82"};
+    //   5D-B3-5A-52//
+    ASSERT_EQ(true, filter_by_byte(str1, 90, BytePlace::any));
+}
+TEST(test_comparision, test20)
+{
+    const auto str1{"91.95.90.82"};
+    //   5D-B3-5A-52//
+    ASSERT_EQ(true, filter_by_byte(str1, 90, BytePlace::any));
+}
+TEST(test_comparision, test21)
+{
+    const auto str1{"91.95.99.90"};
+    //   5D-B3-5A-52//
+    ASSERT_EQ(true, filter_by_byte(str1, 90, BytePlace::any));
+}
+TEST(test_comparision, test18)
+{
+    const auto str1{"90.179.93.82"};
+    //   5D-B3-5A-52//
+    ASSERT_EQ(true, filter_by_byte(str1, 90, BytePlace::any));
 }

@@ -26,6 +26,7 @@ enum BytePlace : unsigned short
     third = 0x2,
     second = 0x4,
     first = 0x8,
+    any = 0xf
 };
 
 class Filtering
