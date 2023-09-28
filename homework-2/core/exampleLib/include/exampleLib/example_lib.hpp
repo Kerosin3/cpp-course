@@ -19,12 +19,13 @@
 
 using namespace std;
 // specity which byte from ip to test
+// ODD placement
 enum BytePlace : unsigned short
 {
-    first = 0x1,
-    second = 0x2,
-    third = 0x4,
-    forth = 0x8,
+    forth = 0x1,
+    third = 0x2,
+    second = 0x4,
+    first = 0x8,
 };
 
 class Filtering
@@ -38,13 +39,14 @@ class Filtering
     Filtering() = delete;
     Filtering(std::ifstream& cin_stream) : cinstream(cin_stream){};
     void read_input();
-    void sort_descending();
+    void sort_descending(vector<string>&);
     void printout();
-    void printout(uint8_t, unsigned short);
+    Filtering& filter_this(uint8_t, unsigned short);
+
     void reset_sequence()
     {
-        this->sequence = false;
         this->tmp_storage.clear();
+        this->sequence = false;
     }
 };
 

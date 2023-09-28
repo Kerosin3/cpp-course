@@ -11,37 +11,43 @@ void Filtering::read_input()
     }
 }
 
-void Filtering::sort_descending()
+void Filtering::sort_descending(vector<string>& src)
 {
-    std::sort(this->input_lines.begin(), this->input_lines.end(), [](const std::string& str1, const std::string& str2) {
+    std::sort(src.begin(), src.end(), [](const std::string& str1, const std::string& str2) {
         return !compare_strings(str1, str2);
     });
 }
 
-void Filtering::printout(uint8_t BytePattern, unsigned short ByteToTest)
+Filtering& Filtering::filter_this(uint8_t BytePattern, unsigned short ByteToTest)
 {
-    cout << "----------" << endl;
+    cout << "------" << endl;
     auto& src = (this->sequence) ? this->tmp_storage : this->input_lines;
-    for (const auto& anIp : src)
+    auto it = src.begin();
+    while (it != src.end())
     {
-        auto TestValue = filter_by_byte(anIp, BytePattern, ByteToTest);
+        auto TestValue = filter_by_byte(*it, BytePattern, ByteToTest);
         if (TestValue)
         {
-            // append to tmp_storage
-            this->tmp_storage.push_back(anIp);
+            // wrotking with full
+            if (!this->sequence)
+            {
+                this->tmp_storage.push_back(*it);
+            }
+            else
+            {
+                this->tmp_storage.erase(it);
+            }
         }
-        else
-        {
-            continue;
-        }
+        it++;
     }
     this->sequence = true;
+    return *this;
 }
 
 void Filtering::printout()
 {
-
     auto& src = (this->sequence) ? this->tmp_storage : this->input_lines;
+    sort_descending(src);
     for (const auto& anIp : src)
     {
         cout << anIp << endl;

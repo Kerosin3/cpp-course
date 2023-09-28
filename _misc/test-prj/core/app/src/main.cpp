@@ -46,7 +46,7 @@ struct Some_class
     {
         cout << fmt::format("name is {}", d_name);
     };
-    void printout_shared() const
+    void filter_this_shared() const
     {
         cout << "your data is " << *this->comon << endl;
     };
@@ -140,7 +140,7 @@ template <typename T> class Grid
 {
   public:
     explicit Grid(size_t width = d_widht, size_t height = d_height);
-    void printout()
+    void filter_this()
     {
         fmt::println("data 1 {}, data 2 {}", m_width, m_height);
     }
@@ -187,7 +187,7 @@ int main(int /*unused*/, char** /*unused*/)
     auto x = myExample.add_something(10, 20);
 
     IntGrid MYGrid{};
-    MYGrid.printout();
+    MYGrid.filter_this();
 
     return EXIT_SUCCESS;
 }
