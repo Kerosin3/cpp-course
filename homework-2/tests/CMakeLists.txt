@@ -41,8 +41,6 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY OUTPUT_NAME ${executable_name})
 #include libraries
 target_link_libraries(${PROJECT_NAME} 
 	${lib1_to_add}
-	spdlog::spdlog
-	fmt::fmt
 	gtest_main
 	gmock_main
 	Threads::Threads

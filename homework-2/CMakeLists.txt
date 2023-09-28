@@ -42,22 +42,6 @@ FetchContent_Declare(googletest
 FetchContent_MakeAvailable(googletest)
 ##-------------
 ##-------------
-FetchContent_Declare(fmt
-  GIT_REPOSITORY https://github.com/fmtlib/fmt.git
-  GIT_PROGRESS TRUE
-  GIT_TAG a0b8a92e3d1532361c2f7feb63babc5c18d00ef2 #v 10.0.0
-)
-FetchContent_MakeAvailable(fmt)
-##-------------
-##-------------
-FetchContent_Declare(spdlog
-  GIT_REPOSITORY https://github.com/gabime/spdlog
-  GIT_PROGRESS TRUE
-  GIT_TAG 7e635fca68d014934b4af8a1cf874f63989352b7 #v1.12.0
-)
-
-set(SPDLOG_FMT_EXTERNAL ON)# external fmtlib
-FetchContent_MakeAvailable(spdlog)
 ##-------------
 find_package(Threads REQUIRED) # for pthread
 

@@ -1,34 +1,6 @@
 #include "lib1.hpp"
-#include <algorithm>
-#include <array>
-#include <bitset>
-#include <boost/range/irange.hpp>
-#include <cassert>
-#include <csignal>
-#include <cstddef>
-#include <cstdint>
-#include <cstdlib>
-#include <cstring>
 #include <exampleLib/example_lib.hpp>
-#include <fmt/color.h>
-#include <fmt/core.h>
-#include <fmt/format.h>
-#include <fstream>
-#include <initializer_list>
 #include <iostream>
-#include <istream>
-#include <iterator>
-#include <memory>
-#include <new>
-#include <optional>
-#include <spdlog/spdlog.h>
-#include <sstream>
-#include <stdexcept>
-#include <string>
-#include <string_view>
-#include <thread>
-#include <utility>
-#include <vector>
 
 #ifdef _VERSIONING
 #include "version.h"
@@ -42,22 +14,9 @@
 
 using namespace std;
 
-void read(std::istream& fp)
-{
-    while (!fp.eof())
-    {
-        std::string line;
-        std::getline(fp, line);
-        std::cout << line << std::endl;
-        ;
-    }
-}
-
 int main(int argc, char* argv[])
 {
-    // read(std::cin);
-    std::ifstream cinstream("ip_filter.tsv");
-    Filtering filter1(cinstream);
+    Filtering filter1(std::cin);
     filter1.read_input();
     filter1.printout();
     filter1.reset_sequence();
@@ -67,7 +26,7 @@ int main(int argc, char* argv[])
     filter1.reset_sequence();
 
     filter1.filter_this(70, BytePlace::second);
-    filter1.filter_this(46, BytePlace::first); //.filter_this(70, BytePlace::second);
+    filter1.filter_this(46, BytePlace::first);
     filter1.printout();
     filter1.reset_sequence();
 

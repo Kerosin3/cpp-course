@@ -69,7 +69,7 @@ void Filtering::printout()
     sort_descending(src);
     for (const auto& anIp : src)
     {
-        cout << anIp << endl;
+        cout << std::nounitbuf << anIp << '\n';
     }
 }
 
@@ -140,8 +140,10 @@ bool compare_strings(const std::string& str1, const std::string& str2)
     std::array<bool, 4> CmpState{false};
     for ([[maybe_unused]] auto& var : CmpState)
     {
+        // get lines
         std::getline(Stream1, String1, Delimiter);
         std::getline(Stream2, String2, Delimiter);
+        // convert strings to numbers
         auto String1Number = std::stoi(String1);
         auto String2Number = std::stoi(String2);
         if (String1Number < String2Number)
@@ -161,12 +163,16 @@ bool compare_strings(const std::string& str1, const std::string& str2)
     };
     return false;
 }
+/**
+ * @brief converting string containing ipv4 IP to uint32
+ *
+ * @param[input] ipv4Str string with an IP
+ * @return parsed number
+ */
 uint32_t convert(const std::string& ipv4Str)
 {
     std::istringstream iss(ipv4Str);
-
     uint32_t Ipv4ToNumeric = 0;
-
     for (uint32_t i = 0; i < 4; ++i)
     {
         uint32_t part;

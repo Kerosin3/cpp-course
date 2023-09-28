@@ -22,7 +22,7 @@ configure_file(version.h.in version.h)
 # specify library to link with
 set(lib1_to_add "exampleLib")
 # set executable output name
-set(executable_name "HOMEWORK2_EXEC")
+set(executable_name "ip_filter")
 # Load all the source file within the folder src
 # add include and sources
 set( SOURCE_PATH "${PROJECT_SOURCE_DIR}/src" )
@@ -71,8 +71,6 @@ ENDIF()
 
 target_link_libraries(${PROJECT_NAME} 
 	${lib1_to_add}
-	spdlog::spdlog
-	fmt::fmt
 	gtest_main
 	Threads::Threads
 	)

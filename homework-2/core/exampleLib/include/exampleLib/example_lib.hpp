@@ -28,14 +28,14 @@ enum class BytePlace : unsigned
 
 class Filtering
 {
-    std::ifstream& cinstream;
+    std::istream& cinstream;
     std::vector<std::string> input_lines;
     std::vector<std::string> tmp_storage;
     bool sequence{false};
 
   public:
     Filtering() = delete;
-    Filtering(std::ifstream& cin_stream) : cinstream(cin_stream){};
+    Filtering(std::istream& istream) : cinstream(istream){};
     void read_input();
     inline static void sort_descending(std::vector<std::string>&);
     void printout();
@@ -53,4 +53,4 @@ bool compare_strings(const std::string& str1, const std::string& str2);
 bool filter_by_byte(const std::string& str, uint8_t byte, BytePlace place);
 
 // convert ipv4 string with . delimiter to hex representation
-inline uint32_t convert(const std::string& ipv4Str);
+uint32_t convert(const std::string& ipv4Str);
