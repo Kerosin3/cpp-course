@@ -80,27 +80,6 @@ TEST(test_comparision, test9)
     uint32_t rezult = convert(str1);
     ASSERT_EQ(anws, rezult);
 }
-
-TEST(test_comparision, test8)
-{
-    const auto str1{"93.179.90.83"};
-    //   5D-B3-5A-52//
-    uint32_t rezult = convert(str1);
-    bool xvar = false;
-    constexpr std::uint8_t zeros_mask{0x000000FF};
-    constexpr std::uint8_t check{83};
-    for (size_t i = 0; i < 1; i++)
-    {
-        rezult >>= (i * 8); // shift right
-        uint32_t masked = rezult & zeros_mask;
-        if (!((masked) ^ check))
-        {
-            xvar = true;
-        }
-    }
-    ASSERT_EQ(true, xvar);
-}
-
 TEST(test_comparision, test10)
 {
     const auto str1{"93.179.90.83"};

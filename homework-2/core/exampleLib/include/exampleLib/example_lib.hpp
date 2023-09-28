@@ -17,10 +17,7 @@
 #include "version.h"
 #endif
 
-using namespace std;
-// specity which byte from ip to test
-// ODD placement
-enum BytePlace : unsigned short
+enum class BytePlace : unsigned
 {
     forth = 0x1,
     third = 0x2,
@@ -40,41 +37,20 @@ class Filtering
     Filtering() = delete;
     Filtering(std::ifstream& cin_stream) : cinstream(cin_stream){};
     void read_input();
-    void sort_descending(vector<string>&);
+    inline static void sort_descending(std::vector<std::string>&);
     void printout();
-    Filtering& filter_this(uint8_t, unsigned short);
-
-    void reset_sequence()
+    void filter_this(uint8_t, BytePlace);
+    inline void reset_sequence()
     {
         this->tmp_storage.clear();
         this->sequence = false;
     }
 };
-
-// returns true is str1 <= str2 using atoi()
+// comparing strings with ipv4
 bool compare_strings(const std::string& str1, const std::string& str2);
 
 // true if specified byte position matches specified byte value
-
-bool filter_by_byte(const std::string& str, uint8_t byte, unsigned short place);
+bool filter_by_byte(const std::string& str, uint8_t byte, BytePlace place);
 
 // convert ipv4 string with . delimiter to hex representation
-inline uint32_t convert(const std::string& ipv4Str)
-{
-    std::istringstream iss(ipv4Str);
-
-    uint32_t ipv4 = 0;
-
-    for (uint32_t i = 0; i < 4; ++i)
-    {
-        uint32_t part;
-        iss >> part;
-        ipv4 |= part << (8 * (3 - i));
-        if (i != 3)
-        {
-            char delimiter;
-            iss >> delimiter;
-        }
-    }
-    return ipv4;
-}
+inline uint32_t convert(const std::string& ipv4Str);
