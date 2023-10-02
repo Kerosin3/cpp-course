@@ -8,7 +8,7 @@ on:
       - main
       - 'HW*'
 env: 
-  prj_to_test: 'homework-2'
+  prj_to_test: 'homework-4'
   deb_name: 'ip_filter.deb'
 jobs:
   build-and-run-test:
@@ -52,30 +52,4 @@ jobs:
       env:
        CC: clang-15
        CXX: clang++-15
-    # add release
-    - name: create release
-      id: create_release
-      uses: actions/create-release@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-        tag_name: ${{ github.run_number }}
-        release_name: Release ${{ github.run_number }}
-        draft: false
-        prerelease: false
-    - id: toUpper
-      run: echo "::set-output name=upperCasePrj::${PRJ_NAME_MIXED^^}"
-      env:
-        PRJ_NAME_MIXED: ${{ env.prj_to_test }}
-    - name: upload release assets
-      id: upload-release-asset
-      uses: actions/upload-release-asset@v1
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./_deb/${{ env.deb_name }}
-          asset_name: ${{ env.deb_name }}
-          asset_content_type: application/vnd.debian.binary-package
-
 
