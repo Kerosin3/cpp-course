@@ -1,4 +1,4 @@
-# HOMEWORK-2
+# HOMEWORK-4
 
 ## Min. Requirements
 
@@ -26,7 +26,7 @@
 
 #### Linux x86_64
 
-`ctest --test-dir ./build/linux-x64-release/homework-2`
+`ctest --test-dir ./build/linux-x64-release/homework-4`
 
 ### Packing to deb
 

@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.25)
 
 set(CMAKE_GENERATOR "Ninja" CACHE INTERNAL "" FORCE)
 
-set(CMAKE_PROJECT_NAME "HOMEWORK-2")
+set(CMAKE_PROJECT_NAME "HOMEWORK-4")
 #set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(MINOR_VERSION "0" CACHE INTERNAL "Minor version")
 set(MAJOR_VERSION "1" CACHE INTERNAL "Major version")
@@ -42,29 +42,23 @@ FetchContent_Declare(googletest
 FetchContent_MakeAvailable(googletest)
 ##-------------
 ##-------------
-FetchContent_Declare(fmt
-  GIT_REPOSITORY https://github.com/fmtlib/fmt.git
-  GIT_PROGRESS TRUE
-  GIT_TAG a0b8a92e3d1532361c2f7feb63babc5c18d00ef2 #v 10.0.0
-)
-FetchContent_MakeAvailable(fmt)
-##-------------
-##-------------
 find_package(Threads REQUIRED) # for pthread
 
 ## add dirictories
 add_subdirectory(core)
 add_subdirectory(tests)
 
-include(${ROOT_DIR_PRJ}/cmake.include/cpack.cmake)
 
 set(executable "app")
 set(lib1 "exampleLib")
 
-install(TARGETS ${executable} DESTINATION bin/)
+install(TARGETS ${executable} RUNTIME DESTINATION bin/ COMPONENT ${executable})
 set_target_properties( ${executable} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/lib/${CMAKE_PROJECT_NAME} )
 
-install(TARGETS ${lib1} DESTINATION lib/${CMAKE_PROJECT_NAME})
+install(TARGETS ${lib1} LIBRARY DESTINATION lib/${CMAKE_PROJECT_NAME} 
+	#PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+	COMPONENT ${lib1})
 set_target_properties( ${lib1} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/lib/${CMAKE_PROJECT_NAME} )
 
+include(${ROOT_DIR_PRJ}/cmake.include/cpack.cmake)
 

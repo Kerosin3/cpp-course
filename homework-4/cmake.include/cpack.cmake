@@ -1,5 +1,6 @@
 message("${Cyan} CPACK IS SET ${ColourReset}")
 
+set(deb_package_name "homework-3")
 set(CPACK_VERBATIM_VARIABLES YES)
 
 set(CPACK_GENERATOR DEB)
@@ -9,9 +10,9 @@ set(CPACK_PACKAGE_VERSION_PATCH "${PROJECT_VERSION_PATCH}")
 
 set(CPACK_PACKAGE_CONTACT keromvp@gmail.com)
 
-set(CPACK_PACKAGE_FILE_NAME "ip_filter")
+set(CPACK_PACKAGE_FILE_NAME $deb_package_name)
 
-set(CPACK_PACKAGE_NAME "ip_filter")
+set(CPACK_PACKAGE_NAME $deb_package_name)
 
 set(CPACK_PACKAGE_INSTALL_DIRECTORY ${CPACK_PACKAGE_NAME})
 set(CPACK_PACKAGE_DIRECTORY "${CMAKE_SOURCE_DIR}/_deb")
