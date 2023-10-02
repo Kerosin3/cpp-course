@@ -43,10 +43,10 @@ include(${ROOT_DIR_PRJ}/cmake.include/executable.cmake)
 #set release
 print_build_type(${PROJECT_NAME})
 #setup executalbe
-
+set(BUILD_DOCS true)
 ###########################
 IF (BUILD_DOCS)
-message("${CYAN} BUILDING DOCS FOR >[${PROJECT_NAME}]< ${ColourReset}")
+	message("${Cyan} BUILDING DOCS FOR >[${PROJECT_NAME}]< ${ColourReset}")
 find_package(Doxygen 
 	     REQUIRED dot 
 	     OPTIONAL_COMPONENTS mscgen dia)
