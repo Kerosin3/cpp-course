@@ -18,6 +18,27 @@ TEST(TestGroupName, Subtest_1)
 {
     ASSERT_TRUE(1 == 1);
 }
+
+TEST(test_convert, test1)
+{
+    const auto str1{"111.111.111.111"s};
+    std::array<uint8_t, 4> answer{111, 111, 111, 111};
+    ASSERT_EQ(answer, get_ipv4_int(str1));
+}
+
+TEST(test_convert, test2)
+{
+    const auto str1{"111.111.111.112"s};
+    std::array<uint8_t, 4> answer{111, 111, 111, 112};
+    ASSERT_EQ(answer, get_ipv4_int(str1));
+}
+TEST(test_convert, test3)
+{
+    const auto str1{"111.141.111.112"s};
+    std::array<uint8_t, 4> answer{111, 141, 111, 112};
+    ASSERT_EQ(answer, get_ipv4_int(str1));
+}
+
 TEST(test_comparision, test2)
 {
     // second is greater -> true

@@ -40,12 +40,15 @@ class Filtering
     inline static void sort_descending(std::vector<std::string>&);
     void printout();
     void filter_this(uint8_t, BytePlace);
+    //     std::array<uint8_t, 4> get_ipv4_int(const string&);
     inline void reset_sequence()
     {
         this->tmp_storage.clear();
         this->sequence = false;
     }
 };
+
+std::array<uint8_t, 4> get_ipv4_int(const std::string&);
 // comparing strings with ipv4
 bool compare_strings(const std::string& str1, const std::string& str2);
 

@@ -11,10 +11,26 @@ void Filtering::read_input()
     while (std::getline(this->cinstream, InputLine))
     {
         auto DelimPosition = InputLine.find('\t');
-        this->input_lines.emplace_back(InputLine.substr(0, DelimPosition));
+        auto a_str = InputLine.substr(0, DelimPosition);
+        this->input_lines.emplace_back(a_str);
     }
 }
 
+std::array<uint8_t, 4> get_ipv4_int(const std::string& str_in)
+{
+    auto delimiter = '.';
+    size_t initial_position{};
+    std::array<uint8_t, 4> out_data{};
+    for (unsigned short index = 0; auto& a_byte : out_data)
+    {
+        size_t position = str_in.find(delimiter, initial_position);
+        auto numeric_string = std::stoi(str_in.substr(initial_position, position - initial_position));
+        a_byte = numeric_string;
+        initial_position = position + 1;
+        index++;
+    }
+    return out_data;
+}
 /**
  * @brief sorting
  *
