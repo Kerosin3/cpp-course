@@ -48,22 +48,31 @@ template <typename T> auto generic_sort(T& container)
 */
 namespace sorting
 {
-template <class T> typename std::enable_if_t<std::is_same_v<T, int8_t>, void> print_ip(T generic_ip)
+
+template <typename T> typename std::enable_if_t<std::is_same_v<T, int8_t>, void> print_ip(T generic_ip)
 {
     cout << "uint8" << endl;
 }
 
-template <class T> typename std::enable_if_t<std::is_same_v<T, int16_t>, void> print_ip(T generic_ip)
+template <typename T> typename std::enable_if_t<std::is_same_v<T, int16_t>, void> print_ip(T generic_ip)
 {
     cout << "uint16" << endl;
 }
-template <class T> typename std::enable_if_t<std::is_same_v<T, int32_t>, void> print_ip(T generic_ip)
+template <typename T> typename std::enable_if_t<std::is_same_v<T, int32_t>, void> print_ip(T generic_ip)
 {
     cout << "uint32" << endl;
 }
-template <class T> typename std::enable_if_t<std::is_same_v<T, std::vector<int>>, void> print_ip(T generic_ip)
+template <typename T> typename std::enable_if_t<std::is_same_v<T, std::vector<int>>, void> print_ip(T generic_ip)
 {
     cout << "vector" << endl;
+    for (auto const i : generic_ip)
+    {
+        cout << i << endl;
+    }
+}
+template <typename T> typename std::enable_if_t<std::is_same_v<T, std::list<short>>, void> print_ip(T generic_ip)
+{
+    cout << "list" << endl;
     for (auto const i : generic_ip)
     {
         cout << i << endl;
@@ -83,7 +92,8 @@ int main(int argc, char* argv[])
     sorting::print_ip(int16_t{55});
     sorting::print_ip(int32_t{555});
     std::vector v1{1, 2, 34, 4};
-
+    std::list<short> v2{123, 323, 434, 323};
     sorting::print_ip(v1);
+    sorting::print_ip(v2);
     return EXIT_SUCCESS;
 }
