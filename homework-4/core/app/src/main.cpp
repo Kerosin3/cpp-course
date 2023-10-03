@@ -23,7 +23,8 @@ template <typename T> typename std::enable_if_t<std::is_integral_v<T>, void> pri
     unsigned short mask = 0xFF;
     for (auto index = sizeof(T) - 1; index > 0; index--)
     {
-        cout << ((number >> index * 8) & mask) << '.';
+        auto shifted = number >> index * 8;
+        cout << (shifted & mask) << '.';
     }
 
     cout << (number & mask) << endl;
@@ -32,13 +33,14 @@ template <typename T> typename std::enable_if_t<std::is_same_v<T, std::string>, 
 {
     cout << number << endl;
 }
+// if not string -> list
 
-template <typename C>
-decltype(begin(declval<C>()), end(declval<C>()), typename enable_if<!is_same_v<string, C>, void>::type()) print_ip(
-    const C& container)
+template <typename T>
+decltype(begin(declval<T>()), end(declval<T>()), enable_if_t<!is_same_v<string, T>, void>()) print_ip(
+    const T& cont_list)
 {
-    string separator = "";
-    for (const auto part : container)
+    string separator{};
+    for (const auto part : cont_list)
     {
         cout << separator << part;
         separator = ".";
@@ -63,7 +65,5 @@ int main(int argc, char* argv[])
     std::list<short> v1{1, 23, 4, 543};
     sorting::print_ip("dasdasdada"s);
     sorting::print_ip(v1);
-    int x = 10;
-    decltype(x, y) x2 = 10;
     return EXIT_SUCCESS;
 }
