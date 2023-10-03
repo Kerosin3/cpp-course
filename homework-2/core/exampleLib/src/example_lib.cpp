@@ -12,11 +12,11 @@ void Filtering::read_input()
     {
         auto DelimPosition = InputLine.find('\t');
         auto a_str = InputLine.substr(0, DelimPosition);
-        this->input_lines.emplace_back(a_str);
+        this->input_lines.emplace_back(get_ipv4_int(a_str));
     }
 }
 
-std::array<uint8_t, 4> get_ipv4_int(const std::string& str_in)
+std::array<uint8_t, 4> Filtering::get_ipv4_int(const std::string& str_in)
 {
     auto delimiter = '.';
     size_t initial_position{};
