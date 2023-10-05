@@ -1,5 +1,7 @@
 # HOMEWORK-4
 
+## USING SFINAE
+
 ## Min. Requirements
 
 + Git
@@ -34,4 +36,4 @@
 
 #### Running
 
-Execute is shell `HOMEWORK2_EXEC`
+Execute is shell ``print_ip

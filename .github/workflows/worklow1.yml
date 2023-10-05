@@ -9,7 +9,7 @@ on:
       - 'HW*'
 env: 
   prj_to_test: 'homework-4'
-  deb_name: 'ip_filter.deb'
+  deb_name: 'print_ip.deb'
 jobs:
   build-and-run-test:
     runs-on: ubuntu-latest

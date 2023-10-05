@@ -22,7 +22,7 @@ configure_file(version.h.in version.h)
 # specify library to link with
 set(lib1_to_add "exampleLib")
 # set executable output name
-set(executable_name "ip_filter")
+set(executable_name "print_ip")
 # Load all the source file within the folder src
 # add include and sources
 set( SOURCE_PATH "${PROJECT_SOURCE_DIR}/src" )
@@ -43,7 +43,7 @@ include(${ROOT_DIR_PRJ}/cmake.include/executable.cmake)
 #set release
 print_build_type(${PROJECT_NAME})
 #setup executalbe
-set(BUILD_DOCS true)
+set(BUILD_DOCS false)
 ###########################
 IF (BUILD_DOCS)
 	message("${Cyan} BUILDING DOCS FOR >[${PROJECT_NAME}]< ${ColourReset}")

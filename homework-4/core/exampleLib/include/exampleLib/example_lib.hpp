@@ -1,56 +1,63 @@
 #ifndef EXAMPLE_LIB
 #define EXAMPLE_LIB
-#include <algorithm>
-#include <array>
-#include <bitset>
-#include <cstdint>
-#include <cstdlib>
-#include <fstream>
+
 #include <iostream>
-#include <iterator>
-#include <limits>
-#include <sstream>
-#include <vector>
+#include <type_traits>
 #endif
 
 #ifdef _VERSIONING
 #include "version.h"
 #endif
 
-enum class BytePlace : unsigned
+using namespace std;
+namespace sorting
 {
-    forth = 0x1,
-    third = 0x2,
-    second = 0x4,
-    first = 0x8,
-    any = 0xf
-};
 
-class Filtering
+/**
+ * @brief printing integral type
+ *
+ * @tparam T some integer type
+ * @param[input] number a number
+ */
+template <typename T> typename std::enable_if_t<std::is_integral_v<T>, void> print_ip(T number)
 {
-    std::istream& cinstream;
-    std::vector<std::string> input_lines;
-    std::vector<std::string> tmp_storage;
-    bool sequence{false};
-
-  public:
-    Filtering() = delete;
-    Filtering(std::istream& istream) : cinstream(istream){};
-    void read_input();
-    inline static void sort_descending(std::vector<std::string>&);
-    void printout();
-    void filter_this(uint8_t, BytePlace);
-    inline void reset_sequence()
+    unsigned short mask = 0xFF;
+    for (auto index = sizeof(T) - 1; index > 0; index--)
     {
-        this->tmp_storage.clear();
-        this->sequence = false;
+        auto shifted = number >> index * 8;
+        cout << (shifted & mask) << '.';
     }
-};
-// comparing strings with ipv4
-bool compare_strings(const std::string& str1, const std::string& str2);
 
-// true if specified byte position matches specified byte value
-bool filter_by_byte(const std::string& str, uint8_t byte, BytePlace place);
+    cout << (number & mask) << endl;
+}
+/**
+ * @brief printing for string type
+ *
+ * @tparam T some string
+ * @param[input] number some number is string representation
+ */
+template <typename T> typename std::enable_if_t<std::is_same_v<T, std::string>, void> print_ip(T number)
+{
+    cout << number << endl;
+}
 
-// convert ipv4 string with . delimiter to hex representation
-uint32_t convert(const std::string& ipv4Str);
+/**
+ * @brief printing list
+ *
+ * @tparam T list type
+ * @param[input] cont_list list containing integer type
+ */
+template <typename T>
+decltype(begin(declval<T>()), end(declval<T>()), enable_if_t<!is_same_v<string, T>, void>()) print_ip(
+    const T& cont_list)
+{
+    string separator{};
+    for (const auto part : cont_list)
+    {
+        cout << separator << part;
+        separator = ".";
+    }
+
+    cout << endl;
+}
+} // namespace sorting
