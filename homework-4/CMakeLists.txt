@@ -24,7 +24,7 @@ get_filename_component(ROOT_DIR_PRJ
 include(${ROOT_DIR_PRJ}/cmake.include/colors.cmake)
 
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 #enable tests
 enable_testing()
@@ -55,11 +55,10 @@ set(lib1 "exampleLib")
 
 install(TARGETS ${executable} RUNTIME DESTINATION bin/ COMPONENT ${executable})
 set_target_properties( ${executable} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/lib/${CMAKE_PROJECT_NAME} )
-
-install(TARGETS ${lib1} LIBRARY DESTINATION lib/
+# not ok
+install(TARGETS ${lib1} LIBRARY DESTINATION bin/
 	COMPONENT ${lib1})
-
-#set_target_properties( ${lib1} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/lib/${CMAKE_PROJECT_NAME} )
+set_target_properties( ${lib1} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/lib/${CMAKE_PROJECT_NAME} )
 
 
 include(${ROOT_DIR_PRJ}/cmake.include/cpack.cmake)
