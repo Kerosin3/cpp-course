@@ -1,6 +1,6 @@
 message("${Cyan} CPACK IS SET ${ColourReset}")
 
-set(deb_package_name "print_ip")
+set(deb_package_name ${CMAKE_PROJECT_NAME})
 set(CPACK_VERBATIM_VARIABLES YES)
 
 set(CPACK_GENERATOR DEB)
