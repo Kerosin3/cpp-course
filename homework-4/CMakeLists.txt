@@ -56,10 +56,8 @@ set(lib1 "exampleLib")
 install(TARGETS ${executable} RUNTIME DESTINATION bin/ COMPONENT ${executable})
 set_target_properties( ${executable} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/lib/${CMAKE_PROJECT_NAME} )
 
-install(TARGETS ${lib1} LIBRARY DESTINATION bin/
+install(TARGETS ${lib1} LIBRARY DESTINATION lib/
 	COMPONENT ${lib1})
-#install(TARGETS ${lib1} LIBRARY DESTINATION lib/${CMAKE_PROJECT_NAME} 
-#	COMPONENT ${lib1})
 
 #set_target_properties( ${lib1} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/lib/${CMAKE_PROJECT_NAME} )
 
