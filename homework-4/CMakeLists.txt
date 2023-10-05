@@ -54,11 +54,12 @@ set(lib1 "exampleLib")
 
 
 install(TARGETS ${executable} RUNTIME DESTINATION bin/ COMPONENT ${executable})
-set_target_properties( ${executable} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/lib/${CMAKE_PROJECT_NAME} )
+set_target_properties( ${executable} PROPERTIES INSTALL_RPATH "/usr/local/lib/")
+#set_target_properties( ${executable} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/lib/${CMAKE_PROJECT_NAME} )
 # not ok
-install(TARGETS ${lib1} LIBRARY DESTINATION bin/
+install(TARGETS ${lib1} LIBRARY DESTINATION lib/
 	COMPONENT ${lib1})
-set_target_properties( ${lib1} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/lib/${CMAKE_PROJECT_NAME} )
+set_target_properties( ${lib1} PROPERTIES INSTALL_RPATH ${CPACK_INSTALL_PREFIX}/lib )
 
 
 include(${ROOT_DIR_PRJ}/cmake.include/cpack.cmake)
