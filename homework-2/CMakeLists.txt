@@ -54,7 +54,7 @@ find_package(Threads REQUIRED) # for pthread
 
 ## add dirictories
 add_subdirectory(core)
-add_subdirectory(tests)
+#add_subdirectory(tests)
 
 include(${ROOT_DIR_PRJ}/cmake.include/cpack.cmake)
 

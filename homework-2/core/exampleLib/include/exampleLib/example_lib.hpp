@@ -29,7 +29,7 @@ enum class BytePlace : unsigned
 class Filtering
 {
     std::istream& cinstream;
-    std::vector<std::array<uint8_t, 4>> input_lines;
+    std::vector<uint32_t> input_lines;
     std::vector<std::string> tmp_storage;
     bool sequence{false};
 
@@ -37,10 +37,10 @@ class Filtering
     Filtering() = delete;
     Filtering(std::istream& istream) : cinstream(istream){};
     void read_input();
-    inline static void sort_descending(std::vector<std::string>&);
+    inline static void sort_descending(std::vector<uint32_t>&);
     void printout();
     void filter_this(uint8_t, BytePlace);
-    std::array<uint8_t, 4> get_ipv4_int(const std::string&);
+    uint32_t get_ipv4_int(const std::string&);
     inline void reset_sequence()
     {
         this->tmp_storage.clear();
@@ -49,7 +49,7 @@ class Filtering
 };
 
 // comparing strings with ipv4
-bool compare_strings(const std::string& str1, const std::string& str2);
+bool compare_strings(uint32_t, uint32_t);
 
 // true if specified byte position matches specified byte value
 bool filter_by_byte(const std::string& str, uint8_t byte, BytePlace place);

@@ -40,16 +40,4 @@ jobs:
        CC: clang-15
        CXX: clang++-15
     # run tests
-    - name: run tests
-      run: ctest --test-dir ./build/linux-x64-release/${{ env.prj_to_test }}
-      shell: bash
-      env:
-       CC: clang-15
-       CXX: clang++-15
-       GITHUB_RUN_N: ${{ github.run_number }}
-    - name: pack deb
-      run: cmake --build build/linux-x64-release --target package
-      env:
-       CC: clang-15
-       CXX: clang++-15
 

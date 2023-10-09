@@ -11,24 +11,28 @@ void Filtering::read_input()
     while (std::getline(this->cinstream, InputLine))
     {
         auto DelimPosition = InputLine.find('\t');
-        auto a_str = InputLine.substr(0, DelimPosition);
-        this->input_lines.emplace_back(get_ipv4_int(a_str));
+        const auto a_str = InputLine.substr(0, DelimPosition);
+        this->input_lines.push_back(get_ipv4_int(a_str));
+        //         this->input_lines.emplace_back(get_ipv4_int(a_str));
     }
 }
 
-std::array<uint8_t, 4> Filtering::get_ipv4_int(const std::string& str_in)
+uint32_t Filtering::get_ipv4_int(const std::string& str_in)
 {
     auto delimiter = '.';
     size_t initial_position{};
-    std::array<uint8_t, 4> out_data{};
-    for (unsigned short index = 0; auto& a_byte : out_data)
+    uint32_t out_data = 0x0;
+    uint32_t mask = 0xFF000000;
+    for (short index = 3; index >= 0; --index)
     {
         size_t position = str_in.find(delimiter, initial_position);
         auto numeric_string = std::stoi(str_in.substr(initial_position, position - initial_position));
-        a_byte = numeric_string;
         initial_position = position + 1;
-        index++;
+        numeric_string <<= (index * 8);
+        out_data |= numeric_string & mask;
+        mask >>= 8;
     }
+    printf("your data is %X \n", out_data);
     return out_data;
 }
 /**
@@ -36,9 +40,9 @@ std::array<uint8_t, 4> Filtering::get_ipv4_int(const std::string& str_in)
  *
  * @param[input] src vector of strings
  */
-void Filtering::sort_descending(vector<string>& src)
+void Filtering::sort_descending(vector<uint32_t>& src)
 {
-    std::sort(src.begin(), src.end(), [](const std::string& str1, const std::string& str2) {
+    std::sort(src.begin(), src.end(), [](uint32_t str1, uint32_t str2) {
         return !compare_strings(str1, str2);
     });
 }
@@ -49,6 +53,7 @@ void Filtering::sort_descending(vector<string>& src)
  * @param[in] BytePattern single byte that is being searched for
  * @param[in] ByteToTest specify which byte position to search in an IP, 1.2.3.4. 1<- first! 2<- second!
  */
+/*
 void Filtering::filter_this(uint8_t BytePattern, BytePlace ByteToTest)
 {
     auto& src = (this->sequence) ? this->tmp_storage : this->input_lines;
@@ -75,10 +80,23 @@ void Filtering::filter_this(uint8_t BytePattern, BytePlace ByteToTest)
     }
     this->sequence = true;
 }
+*/
 /**
  * @brief printout to stdout
  *
  */
+
+void Filtering::printout()
+{
+    auto& src = this->input_lines;
+    //     sort_descending(src);
+    for (const auto& anIp : src)
+    {
+        cout << std::nounitbuf << anIp << '\n';
+    }
+}
+
+/*
 void Filtering::printout()
 {
     auto& src = (this->sequence) ? this->tmp_storage : this->input_lines;
@@ -88,7 +106,7 @@ void Filtering::printout()
         cout << std::nounitbuf << anIp << '\n';
     }
 }
-
+*/
 /**
  * @brief searches supplied byte on specified place. ANY - search in any byte
  *
@@ -144,38 +162,23 @@ bool filter_by_byte(const std::string& str, uint8_t byte, BytePlace place)
  * @param[input] str2 second string
  * @return true if string2 > string1
  */
-bool compare_strings(const std::string& str1, const std::string& str2)
+bool compare_strings(uint32_t String1Number, uint32_t String2Number)
 {
 
-    std::istringstream Stream1(str1);
-    std::istringstream Stream2(str2);
-
-    std::string String1{};
-    std::string String2{};
-    constexpr char Delimiter = '.';
-    std::array<bool, 4> CmpState{false};
-    for ([[maybe_unused]] auto& var : CmpState)
+    uint32_t mask = 0xFF000000;
+    for (short index = 3; index >= 0; index--)
     {
-        // get lines
-        std::getline(Stream1, String1, Delimiter);
-        std::getline(Stream2, String2, Delimiter);
-        // convert strings to numbers
-        auto String1Number = std::stoi(String1);
-        auto String2Number = std::stoi(String2);
-        if (String1Number < String2Number)
+        auto shift = 8 * index;
+        if (((String1Number & mask) >> index) < ((String2Number & mask) >> index))
         {
             return true;
         }
-        else if (String2Number < String1Number)
+        else if (((String2Number & mask) >> index) < ((String1Number & mask) >> index))
         {
             return false;
         }
-        else // equal
-        {
-            String1.clear();
-            String2.clear();
-            continue;
-        }
+        // equal
+        mask >>= 8;
     };
     return false;
 }
