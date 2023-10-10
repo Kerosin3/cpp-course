@@ -39,7 +39,7 @@ TEST(test_compare, test1)
     uint32_t num2 = 0xFF;
     Filtering filter1(std::cin);
     // second is greater = true
-    ASSERT_EQ(true, compare_strings(num1, num2));
+    ASSERT_EQ(true, compare_ip_as_numbers(num1, num2));
 }
 TEST(test_compare, test2)
 {
@@ -47,7 +47,7 @@ TEST(test_compare, test2)
     uint32_t num2 = 0xFE;
     Filtering filter1(std::cin);
     // first is greater = false
-    ASSERT_EQ(false, compare_strings(num1, num2));
+    ASSERT_EQ(false, compare_ip_as_numbers(num1, num2));
 }
 TEST(test_compare, test3)
 {
@@ -55,7 +55,7 @@ TEST(test_compare, test3)
     uint32_t num2 = 0xAA'BB'CC'FF;
     Filtering filter1(std::cin);
     // first is greater = false
-    ASSERT_EQ(false, compare_strings(num1, num2));
+    ASSERT_EQ(false, compare_ip_as_numbers(num1, num2));
 }
 TEST(test_compare, test4)
 {
@@ -63,7 +63,7 @@ TEST(test_compare, test4)
     uint32_t num2 = 0xFA'BF'CC'FF;
     Filtering filter1(std::cin);
     // second is greater = true
-    ASSERT_EQ(true, compare_strings(num1, num2));
+    ASSERT_EQ(true, compare_ip_as_numbers(num1, num2));
 }
 TEST(test_hex_to_int_repr, test5)
 {

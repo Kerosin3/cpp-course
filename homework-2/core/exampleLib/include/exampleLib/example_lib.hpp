@@ -39,20 +39,20 @@ class Filtering
     Filtering(std::istream& istream) : cinstream(istream){};
     void read_input();
     inline static void sort_descending(std::vector<uint32_t>&);
+    inline static std::string get_ip_char_repr(uint32_t);
+    inline static uint32_t get_ipv4_int(const std::string&);
     void printout();
     void filter_this(uint8_t, BytePlace);
-    uint32_t get_ipv4_int(const std::string&);
-    std::string get_ip_char_repr(uint32_t);
     inline void reset_sequence()
     {
         this->tmp_storage.clear();
         this->sequence = false;
     }
-    static constexpr size_t string_size = 17;
+    static constexpr size_t mc_string_size = 17;
 };
 
-// comparing strings with ipv4
-bool compare_strings(uint32_t, uint32_t);
+// comparing ipv4 addresses as uint32's
+bool compare_ip_as_numbers(uint32_t, uint32_t);
 
 // true if specified byte position matches specified byte value
 bool filter_by_byte(uint32_t, uint8_t byte, BytePlace place);

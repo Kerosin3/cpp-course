@@ -20,14 +20,14 @@ void Filtering::read_input()
  *
  * @param[input] ip_as_uint32 ipv4 as uint32
  */
-std::string Filtering::get_ip_char_repr(uint32_t ip_as_uint32)
+inline std::string Filtering::get_ip_char_repr(uint32_t ip_as_uint32)
 {
-    char out_buf[Filtering::string_size] = {0};
+    char out_buf[Filtering::mc_string_size] = {0};
     uint8_t first = (ip_as_uint32 >> 24) & 0xFF;
     uint8_t second = (ip_as_uint32 >> 16) & 0xFF;
     uint8_t third = (ip_as_uint32 >> 8) & 0xFF;
     uint8_t forth = (ip_as_uint32)&0xFF;
-    auto ret = snprintf(out_buf, Filtering::string_size, "%u.%u.%u.%u", first, second, third, forth);
+    auto ret = snprintf(out_buf, Filtering::mc_string_size, "%u.%u.%u.%u", first, second, third, forth);
     if (!ret)
     {
         throw std::length_error("sprintf wrong lenght has been written");
@@ -40,7 +40,7 @@ std::string Filtering::get_ip_char_repr(uint32_t ip_as_uint32)
  * @param[input] str_in string
  * @return uint32
  */
-uint32_t Filtering::get_ipv4_int(const std::string& str_in)
+inline uint32_t Filtering::get_ipv4_int(const std::string& str_in)
 {
     auto delimiter = '.';
     size_t initial_position{};
@@ -65,7 +65,7 @@ uint32_t Filtering::get_ipv4_int(const std::string& str_in)
 void Filtering::sort_descending(vector<uint32_t>& src)
 {
     std::sort(src.begin(), src.end(), [](uint32_t str1, uint32_t str2) {
-        return !compare_strings(str1, str2);
+        return !compare_ip_as_numbers(str1, str2);
     });
 }
 
@@ -119,17 +119,6 @@ void Filtering::printout()
     }
 }
 
-/*
-void Filtering::printout()
-{
-    auto& src = (this->sequence) ? this->tmp_storage : this->input_lines;
-    sort_descending(src);
-    for (const auto& anIp : src)
-    {
-        cout << std::nounitbuf << anIp << '\n';
-    }
-}
-*/
 /**
  * @brief searches supplied byte on specified place. ANY - search in any byte
  *
@@ -178,21 +167,21 @@ bool filter_by_byte(uint32_t input_inv4_as_uint32, uint8_t byte, BytePlace place
 }
 
 /**
- * @brief compares two strings with format X.Y.Z.Q, bytesizez accordingly to ipv4
+ * @brief compares two ipv4 addresses as numbers
  *
- * @param[input] str1 first string
- * @param[input] str2 second string
- * @return true if string2 > string1
+ * @param[input] ip1number first ip
+ * @param[input] ip2number second ip
+ * @return true if ip2number > ip1number
  */
-bool compare_strings(uint32_t String1Number, uint32_t String2Number)
+bool compare_ip_as_numbers(uint32_t ip1number, uint32_t ip2number)
 {
 
     uint32_t mask = 0xFF000000;
     for (short index = 3; index >= 0; index--)
     {
         auto shift = 8 * index;
-        auto num1 = ((String1Number & mask) >> shift);
-        auto num2 = ((String2Number & mask) >> shift);
+        auto num1 = ((ip1number & mask) >> shift);
+        auto num2 = ((ip2number & mask) >> shift);
         if (num1 < num2)
         {
             return true;
