@@ -19,7 +19,7 @@ int main(int argc, char* argv[])
     Filtering filter1(std::cin);
     filter1.read_input();
     filter1.printout();
-    /*
+
     filter1.reset_sequence();
 
     filter1.filter_this(1, BytePlace::first);
@@ -34,6 +34,6 @@ int main(int argc, char* argv[])
     filter1.filter_this(46, BytePlace::any);
     filter1.printout();
     filter1.reset_sequence();
-    */
+
     return EXIT_SUCCESS;
 }

@@ -10,6 +10,7 @@
 #include <iterator>
 #include <limits>
 #include <sstream>
+#include <stdexcept>
 #include <vector>
 #endif
 
@@ -30,7 +31,7 @@ class Filtering
 {
     std::istream& cinstream;
     std::vector<uint32_t> input_lines;
-    std::vector<std::string> tmp_storage;
+    std::vector<uint32_t> tmp_storage;
     bool sequence{false};
 
   public:
@@ -41,18 +42,20 @@ class Filtering
     void printout();
     void filter_this(uint8_t, BytePlace);
     uint32_t get_ipv4_int(const std::string&);
+    std::string get_ip_char_repr(uint32_t);
     inline void reset_sequence()
     {
         this->tmp_storage.clear();
         this->sequence = false;
     }
+    static constexpr size_t string_size = 17;
 };
 
 // comparing strings with ipv4
 bool compare_strings(uint32_t, uint32_t);
 
 // true if specified byte position matches specified byte value
-bool filter_by_byte(const std::string& str, uint8_t byte, BytePlace place);
+bool filter_by_byte(uint32_t, uint8_t byte, BytePlace place);
 
 // convert ipv4 string with . delimiter to hex representation
 uint32_t convert(const std::string& ipv4Str);

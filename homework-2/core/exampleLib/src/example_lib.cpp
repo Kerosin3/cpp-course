@@ -13,10 +13,33 @@ void Filtering::read_input()
         auto DelimPosition = InputLine.find('\t');
         const auto a_str = InputLine.substr(0, DelimPosition);
         this->input_lines.push_back(get_ipv4_int(a_str));
-        //         this->input_lines.emplace_back(get_ipv4_int(a_str));
     }
 }
-
+/**
+ * @brief converts ip as uint32 to string. THROW when sprintf writes wrong
+ *
+ * @param[input] ip_as_uint32 ipv4 as uint32
+ */
+std::string Filtering::get_ip_char_repr(uint32_t ip_as_uint32)
+{
+    char out_buf[Filtering::string_size] = {0};
+    uint8_t first = (ip_as_uint32 >> 24) & 0xFF;
+    uint8_t second = (ip_as_uint32 >> 16) & 0xFF;
+    uint8_t third = (ip_as_uint32 >> 8) & 0xFF;
+    uint8_t forth = (ip_as_uint32)&0xFF;
+    auto ret = snprintf(out_buf, Filtering::string_size, "%u.%u.%u.%u", first, second, third, forth);
+    if (!ret)
+    {
+        throw std::length_error("sprintf wrong lenght has been written");
+    }
+    return out_buf;
+}
+/**
+ * @brief converting valid ipv4 address to uint32
+ *
+ * @param[input] str_in string
+ * @return uint32
+ */
 uint32_t Filtering::get_ipv4_int(const std::string& str_in)
 {
     auto delimiter = '.';
@@ -26,13 +49,12 @@ uint32_t Filtering::get_ipv4_int(const std::string& str_in)
     for (short index = 3; index >= 0; --index)
     {
         size_t position = str_in.find(delimiter, initial_position);
-        auto numeric_string = std::stoi(str_in.substr(initial_position, position - initial_position));
+        uint32_t numeric_string = std::stoi(str_in.substr(initial_position, position - initial_position));
         initial_position = position + 1;
         numeric_string <<= (index * 8);
         out_data |= numeric_string & mask;
         mask >>= 8;
     }
-    printf("your data is %X \n", out_data);
     return out_data;
 }
 /**
@@ -53,9 +75,10 @@ void Filtering::sort_descending(vector<uint32_t>& src)
  * @param[in] BytePattern single byte that is being searched for
  * @param[in] ByteToTest specify which byte position to search in an IP, 1.2.3.4. 1<- first! 2<- second!
  */
-/*
+
 void Filtering::filter_this(uint8_t BytePattern, BytePlace ByteToTest)
 {
+    //     auto& src = this->input_lines;
     auto& src = (this->sequence) ? this->tmp_storage : this->input_lines;
     auto IteratorString = src.begin();
     while (IteratorString != src.end())
@@ -80,7 +103,7 @@ void Filtering::filter_this(uint8_t BytePattern, BytePlace ByteToTest)
     }
     this->sequence = true;
 }
-*/
+
 /**
  * @brief printout to stdout
  *
@@ -88,11 +111,11 @@ void Filtering::filter_this(uint8_t BytePattern, BytePlace ByteToTest)
 
 void Filtering::printout()
 {
-    auto& src = this->input_lines;
-    //     sort_descending(src);
+    auto& src = (this->sequence) ? this->tmp_storage : this->input_lines;
+    sort_descending(src);
     for (const auto& anIp : src)
     {
-        cout << std::nounitbuf << anIp << '\n';
+        cout << std::nounitbuf << Filtering::get_ip_char_repr(anIp) << '\n';
     }
 }
 
@@ -115,10 +138,9 @@ void Filtering::printout()
  * @param[[TODO:direction]] place byte position in an IP
  * @return true if matches
  */
-bool filter_by_byte(const std::string& str, uint8_t byte, BytePlace place)
+bool filter_by_byte(uint32_t input_inv4_as_uint32, uint8_t byte, BytePlace place)
 {
     // convert string to number
-    auto ConvertedStringToNumber = convert(str);
     // mask to shift
     for (size_t index = 0; index < 4; index++)
     {
@@ -133,7 +155,7 @@ bool filter_by_byte(const std::string& str, uint8_t byte, BytePlace place)
             // adjust bitmask
             ZerosMask <<= index * 8;
             // mask off
-            uint32_t Masked = (ConvertedStringToNumber & ZerosMask) >> (index * 8); // mask off and shift right
+            uint32_t Masked = (input_inv4_as_uint32 & ZerosMask) >> (index * 8); // mask off and shift right
             auto Match = (!((Masked) ^ byte));
             if (place != BytePlace::any)
             {
@@ -169,11 +191,13 @@ bool compare_strings(uint32_t String1Number, uint32_t String2Number)
     for (short index = 3; index >= 0; index--)
     {
         auto shift = 8 * index;
-        if (((String1Number & mask) >> index) < ((String2Number & mask) >> index))
+        auto num1 = ((String1Number & mask) >> shift);
+        auto num2 = ((String2Number & mask) >> shift);
+        if (num1 < num2)
         {
             return true;
         }
-        else if (((String2Number & mask) >> index) < ((String1Number & mask) >> index))
+        else if (num2 < num1)
         {
             return false;
         }

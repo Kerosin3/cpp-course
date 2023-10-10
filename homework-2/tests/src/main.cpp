@@ -1,6 +1,7 @@
 #include "exampleLib/example_lib.hpp"
 #include "test1.hpp"
 #include "gtest/gtest.h"
+#include <cstdint>
 #include <cstdlib>
 #include <gmock/gmock.h>
 
@@ -18,159 +19,80 @@ TEST(TestGroupName, Subtest_1)
 {
     ASSERT_TRUE(1 == 1);
 }
-
-TEST(test_convert, test1)
+TEST(test_converting, test1)
 {
     const auto str1{"111.111.111.111"s};
-    std::array<uint8_t, 4> answer{111, 111, 111, 111};
-    ASSERT_EQ(answer, get_ipv4_int(str1));
+    Filtering filter1(std::cin);
+    uint32_t answ = 0x6f6f6f6f;
+    ASSERT_EQ(answ, filter1.get_ipv4_int(str1));
 }
-
-TEST(test_convert, test2)
+TEST(test_converting, test2)
 {
-    const auto str1{"111.111.111.112"s};
-    std::array<uint8_t, 4> answer{111, 111, 111, 112};
-    ASSERT_EQ(answer, get_ipv4_int(str1));
+    const auto str1{"111.111.112.111"s};
+    Filtering filter1(std::cin);
+    uint32_t answ = 0x6f6f706f;
+    ASSERT_EQ(answ, filter1.get_ipv4_int(str1));
 }
-TEST(test_convert, test3)
+TEST(test_compare, test1)
 {
-    const auto str1{"111.141.111.112"s};
-    std::array<uint8_t, 4> answer{111, 141, 111, 112};
-    ASSERT_EQ(answer, get_ipv4_int(str1));
+    uint32_t num1 = 0xFE;
+    uint32_t num2 = 0xFF;
+    Filtering filter1(std::cin);
+    // second is greater = true
+    ASSERT_EQ(true, compare_strings(num1, num2));
 }
-
-TEST(test_comparision, test2)
+TEST(test_compare, test2)
 {
-    // second is greater -> true
-    const auto str1{"111.111.111.111"s};
-    const auto str2{"111.111.111.112"s};
-    ASSERT_TRUE(compare_strings(str1, str2));
+    uint32_t num1 = 0xFF;
+    uint32_t num2 = 0xFE;
+    Filtering filter1(std::cin);
+    // first is greater = false
+    ASSERT_EQ(false, compare_strings(num1, num2));
 }
-
+TEST(test_compare, test3)
+{
+    uint32_t num1 = 0xFA'BB'CC'FF;
+    uint32_t num2 = 0xAA'BB'CC'FF;
+    Filtering filter1(std::cin);
+    // first is greater = false
+    ASSERT_EQ(false, compare_strings(num1, num2));
+}
+TEST(test_compare, test4)
+{
+    uint32_t num1 = 0xFA'BB'CC'FF;
+    uint32_t num2 = 0xFA'BF'CC'FF;
+    Filtering filter1(std::cin);
+    // second is greater = true
+    ASSERT_EQ(true, compare_strings(num1, num2));
+}
+TEST(test_hex_to_int_repr, test5)
+{
+    Filtering filter1(std::cin);
+    uint32_t num1 = 0xAA'BB'CC'FF;
+    const auto* str = "170.187.204.255";
+    ASSERT_EQ(str, filter1.get_ip_char_repr(num1));
+}
 TEST(test_comparision, test1)
 {
-    // equals -> false
-    const auto str1{"111.111.111.111"s};
-    const auto str2{"111.111.111.111"s};
-    ASSERT_FALSE(compare_strings(str1, str2));
+    //"93.179.90.83"
+    uint32_t ip_as_uint32 = 0x5D'B3'5A'53;
+    ASSERT_EQ(true, filter_by_byte(ip_as_uint32, 83, BytePlace::forth));
 }
-
+TEST(test_comparision, test2)
+{
+    //"93.179.90.83"
+    uint32_t ip_as_uint32 = 0x5D'B3'5A'54;
+    ASSERT_EQ(false, filter_by_byte(ip_as_uint32, 83, BytePlace::forth));
+}
 TEST(test_comparision, test3)
 {
-    // first is greater -> false
-    const auto str1{"211.111.111.111"s};
-    const auto str2{"111.111.111.111"s};
-    ASSERT_FALSE(compare_strings(str1, str2));
+    //"93.179.90.83"
+    uint32_t ip_as_uint32 = 0x5D'B3'5A'53;
+    ASSERT_EQ(true, filter_by_byte(ip_as_uint32, 90, BytePlace::third));
 }
 TEST(test_comparision, test4)
 {
-    // first is greater -> false
-    const auto str1{"186.204.34.46"s};
-    const auto str2{"186.46.222.194"s};
-    ASSERT_FALSE(compare_strings(str1, str2));
-}
-TEST(test_comparision, test5)
-{
-    // second is greater -> true
-    const auto str1{"220.42.146.225"s};
-    const auto str2{"220.189.194.162"s};
-    ASSERT_TRUE(compare_strings(str1, str2));
-}
-TEST(test_comparision, test6)
-{
-    // second is greater -> true
-    const auto str1{"255.255.255.255"};
-    uint32_t rezult = convert(str1);
-    ASSERT_EQ(4294967295, rezult);
-}
-TEST(test_comparision, test7)
-{
-    // second is greater -> true
-    const auto str1{"93.179.90.82"};
-    //   5D-B3-5A-52//
-    uint32_t anws{0x5DB35A52};
-    uint32_t rezult = convert(str1);
-    ASSERT_EQ(anws, rezult);
-}
-TEST(test_comparision, test9)
-{
-    // second is greater -> true
-    const auto str1{"93.179.90.83"};
-    //   5D-B3-5A-52//
-    uint32_t anws{0x5DB35A53};
-    uint32_t rezult = convert(str1);
-    ASSERT_EQ(anws, rezult);
-}
-TEST(test_comparision, test10)
-{
-    const auto str1{"93.179.90.83"};
-    //   5D-B3-5A-53//
-    ASSERT_EQ(true, filter_by_byte(str1, 83, BytePlace::forth));
-}
-TEST(test_comparision, test11)
-{
-    const auto str1{"93.179.90.82"};
-    //   5D-B3-5A-52//
-    ASSERT_EQ(false, filter_by_byte(str1, 83, BytePlace::forth));
-}
-TEST(test_comparision, test12)
-{
-    const auto str1{"93.179.90.82"};
-    //   5D-B3-5A-52//
-    ASSERT_EQ(true, filter_by_byte(str1, 90, BytePlace::third));
-}
-TEST(test_comparision, test13)
-{
-    const auto str1{"93.179.90.82"};
-    //   5D-B3-5A-52//
-    ASSERT_EQ(true, filter_by_byte(str1, 179, BytePlace::second));
-}
-TEST(test_comparision, test14)
-{
-    const auto str1{"93.179.90.82"};
-    //   5D-B3-5A-52//
-    ASSERT_EQ(true, filter_by_byte(str1, 93, BytePlace::first));
-}
-TEST(test_comparision, test15)
-{
-    const auto str1{"93.179.90.82"};
-    //   5D-B3-5A-52//
-    ASSERT_EQ(false, filter_by_byte(str1, 93, BytePlace::forth));
-}
-TEST(test_comparision, test16)
-{
-    const auto str1{"90.179.93.82"};
-    //   5D-B3-5A-52//
-    ASSERT_EQ(true, filter_by_byte(str1, 93, BytePlace::any));
-}
-TEST(test_comparision, test17)
-{
-    const auto str1{"92.179.90.82"};
-    //   5D-B3-5A-52//
-    ASSERT_EQ(false, filter_by_byte(str1, 93, BytePlace::any));
-}
-
-TEST(test_comparision, test19)
-{
-    const auto str1{"91.90.93.82"};
-    //   5D-B3-5A-52//
-    ASSERT_EQ(true, filter_by_byte(str1, 90, BytePlace::any));
-}
-TEST(test_comparision, test20)
-{
-    const auto str1{"91.95.90.82"};
-    //   5D-B3-5A-52//
-    ASSERT_EQ(true, filter_by_byte(str1, 90, BytePlace::any));
-}
-TEST(test_comparision, test21)
-{
-    const auto str1{"91.95.99.90"};
-    //   5D-B3-5A-52//
-    ASSERT_EQ(true, filter_by_byte(str1, 90, BytePlace::any));
-}
-TEST(test_comparision, test18)
-{
-    const auto str1{"90.179.93.82"};
-    //   5D-B3-5A-52//
-    ASSERT_EQ(true, filter_by_byte(str1, 90, BytePlace::any));
+    //"93.179.90.83"
+    uint32_t ip_as_uint32 = 0x5D'B3'5B'53;
+    ASSERT_EQ(false, filter_by_byte(ip_as_uint32, 90, BytePlace::third));
 }
