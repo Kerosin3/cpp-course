@@ -81,4 +81,19 @@ jobs:
           asset_path: ./_deb/${{ env.deb_name }}
           asset_name: ${{ env.deb_name }}
           asset_content_type: application/vnd.debian.binary-package
-
+     # Build the HTML documentation
+     #  - name: Doxygen Action
+     #uses: mattnotmitt/doxygen-action@v1.1.0
+     #with:
+     #    doxyfile-path: ./${{ env.prj_to_test }}/Doxyfile
+     #    working-directory: .
+     # Deploy the HTML documentation to GitHub Pages
+    - name: GH Pages Deployment
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: .homework-4/docs/exampleLib/html/
+        enable_jekyll: false
+        allow_empty_commit: false
+        force_orphan: true
+        publish_branch: gh-pages
