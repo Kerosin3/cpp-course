@@ -10,54 +10,19 @@
 #endif
 
 using namespace std;
-namespace sorting
+
+namespace storing
 {
 
 /**
- * @brief printing integral type
+ * struct store_element - this class stores current and next element
  *
- * @tparam T some integer type
- * @param[input] number a number
+ * @tparam U datatype
  */
-template <typename T> typename std::enable_if_t<std::is_integral_v<T>, void> print_ip(T number)
+template <typename U> struct store_element
 {
-    unsigned short mask = 0xFF;
-    for (auto index = sizeof(T) - 1; index > 0; index--)
-    {
-        auto shifted = number >> index * 8;
-        cout << (shifted & mask) << '.';
-    }
-
-    cout << (number & mask) << endl;
-}
-/**
- * @brief printing for string type
- *
- * @tparam T some string
- * @param[input] number some number is string representation
- */
-template <typename T> typename std::enable_if_t<std::is_same_v<T, std::string>, void> print_ip(T number)
-{
-    cout << number << endl;
-}
-
-/**
- * @brief printing list
- *
- * @tparam T list type
- * @param[input] cont_list list containing integer type
- */
-template <typename T>
-decltype(begin(declval<T>()), end(declval<T>()), enable_if_t<!is_same_v<string, T>, void>()) print_ip(
-    const T& cont_list)
-{
-    string separator{};
-    for (const auto part : cont_list)
-    {
-        cout << separator << part;
-        separator = ".";
-    }
-
-    cout << endl;
-}
-} // namespace sorting
+    store_element(U* data, store_element<U>* next_element) : m_data(data), m_next_element(next_element) {}
+    U* m_data;
+    store_element<U*> m_next_element;
+};
+} // namespace storing

@@ -1,6 +1,7 @@
 #include "exampleLib/example_lib.hpp"
 #include <iostream>
 #include <list>
+#include <memory>
 #include <type_traits>
 #include <vector>
 

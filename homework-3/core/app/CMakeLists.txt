@@ -22,7 +22,7 @@ configure_file(version.h.in version.h)
 # specify library to link with
 set(lib1_to_add "exampleLib")
 # set executable output name
-set(executable_name "print_ip")
+set(executable_name "homework-3")
 # Load all the source file within the folder src
 # add include and sources
 set( SOURCE_PATH "${PROJECT_SOURCE_DIR}/src" )
