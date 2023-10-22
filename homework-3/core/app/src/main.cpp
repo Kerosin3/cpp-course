@@ -19,6 +19,8 @@ using namespace std;
 
 int main(int argc, char* argv[])
 {
+    auto x = func1(100, 100);
 
+    delete x;
     return EXIT_SUCCESS;
 }

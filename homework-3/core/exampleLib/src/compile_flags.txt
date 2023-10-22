@@ -3,6 +3,8 @@
 -I
 ../exampleLib/include
 -I
+../mallocz/include
+-I
 ../../../contrib/fmt-src/include
 -I
 ../../../contrib/spdlog-src/include

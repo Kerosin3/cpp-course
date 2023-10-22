@@ -2,8 +2,11 @@ macro(set_sharedlib PROJECT_NAME INCLUDE_PATH SOURCE_PATH )
 
 file( GLOB_RECURSE HPPS "${INCLUDE_PATH}/*.hpp" )
 file( GLOB_RECURSE CPPS "${SOURCE_PATH}/*.cpp" )
+file( GLOB_RECURSE H_C "${INCLUDE_PATH}/*.h" )
+file( GLOB_RECURSE C_C "${SOURCE_PATH}/*.c" )
+
 # Define library
-add_library( ${TARGET} SHARED ${CPPS} ${HPPS} )
+add_library( ${TARGET} SHARED ${CPPS} ${HPPS} ${H_C} ${C_C} )
 # include includes + version
 target_include_directories( ${PROJECT_NAME} PUBLIC ${INCLUDE_PATH} ${CMAKE_CURRENT_BINARY_DIR} )
 
