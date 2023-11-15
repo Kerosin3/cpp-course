@@ -29,15 +29,14 @@ class Buffer
     }
     virtual ~Buffer()
     {
-        cout << "deleting" << endl;
         delete head_data;
     };
     reference operator[](size_type index) const
     {
-        cout << "index is " << index << endl;
         if (index >= B_size || index < 0)
             throw std::out_of_range("buffer index is out of range");
-        return *(head_data + index);
+
+        return (head_data[index]);
     }
 };
 
@@ -62,6 +61,7 @@ class Xallocator
 
     ~Xallocator() = default;
     Xallocator(const self&) = delete;
+    Xallocator(self&) = delete;
     Xallocator(self&&) = delete;
     Xallocator operator=(self) = delete;
 
@@ -70,16 +70,19 @@ class Xallocator
         if (count > SIZE)
             throw std::bad_alloc();
         size_type old_offset = m_offset;
-        // cout << "offset is " << m_offset << endl;
         ++m_offset;
         return &m_allocator_buffer[old_offset];
     }
 
-    void deallocate(pointer, size_type) {}
+    void deallocate(pointer, size_type)
+    {
+        // simple//
+    }
 
     template <typename U, typename... Args>
     void construct(U* p, Args&&... args)
     {
+        // place object
         ::new (p) U(std::forward<Args>(args)...);
     }
 

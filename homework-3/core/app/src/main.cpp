@@ -20,6 +20,7 @@
 // https://howardhinnant.github.io/allocator_boilerplate.html
 using namespace std;
 // http://users.cis.fiu.edu/~weiss/Deltoid/vcstl/templates
+/*
 template <typename T>
 class A
 {
@@ -61,15 +62,24 @@ using alias = typename Z<T>::template Inner<T1>;
 
 template <typename T, typename T1>
 using alias2 = typename Z<T>::template func1<T1>;
-
+*/
 int main(int argc, char* argv[])
 {
     // std::map<int, int, std::less<>, Xallocator<std::pair<const int, int>, 1>> amap;
     // amap.insert({1, 5});
     // A<int> Aa;
     // A<float> Af;
-    alias<int, float> adsad;
-    cout << typeid(adsad).name() << endl;
+    // alias<int, float> adsad;
+    // cout << typeid(adsad).name() << endl;
+    Xvector<int, Xallocator<int, 10>> vector;
+    vector.push_back(1);
+    vector.push_back(3);
+    vector.push_back(5);
+
+    for (const auto& elem: vector)
+    {
+        cout << elem << endl;
+    }
 
     return EXIT_SUCCESS;
 }
