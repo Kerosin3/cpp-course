@@ -13,73 +13,49 @@
 #endif
 
 #ifndef __cplusplus
-#error C++ is required
-#elif __cplusplus < 202002L
-#error C++20 is required
+error C++ is required elif __cplusplus < 202002L error C++ 20 is required
 #endif
-// https://howardhinnant.github.io/allocator_boilerplate.html
+
+    int
+    factorial(int n)
+{
+    if (n == 0 || n == 1)
+        return 1;
+    return n * factorial(n - 1);
+}
+
 using namespace std;
-// http://users.cis.fiu.edu/~weiss/Deltoid/vcstl/templates
-/*
-template <typename T>
-class A
-{
-  public:
-    T value;
-    A();
-    ~A();
-};
-
-template <typename X>
-A<X>::A()
-{
-    cout << "construct" << endl;
-}
-template <typename X>
-A<X>::~A()
-{
-    cout << "deconstruct" << endl;
-}
-// template <typename T>
-// using alias = typename A<T>::value;
-
-template <typename A>
-class Z
-{
-  public:
-    template <typename B>
-    struct Inner
-    {
-        B a;
-    };
-    template <typename W>
-    W func1()
-    {}
-};
-
-template <typename T, typename T1>
-using alias = typename Z<T>::template Inner<T1>;
-
-template <typename T, typename T1>
-using alias2 = typename Z<T>::template func1<T1>;
-*/
 int main(int argc, char* argv[])
 {
-    // std::map<int, int, std::less<>, Xallocator<std::pair<const int, int>, 1>> amap;
-    // amap.insert({1, 5});
-    // A<int> Aa;
-    // A<float> Af;
-    // alias<int, float> adsad;
-    // cout << typeid(adsad).name() << endl;
-    Xvector<int, Xallocator<int, 10>> vector;
-    vector.push_back(1);
-    vector.push_back(3);
-    vector.push_back(5);
-
-    for (const auto& elem: vector)
+    // standart
+    std::map<int, int> stl_map{};
+    for (int index = 0; index < 10; index++)
     {
-        cout << elem << endl;
+        stl_map.insert({index, factorial(index)});
     }
-
+    // map with custom alloc
+    std::map<int, int, std::less<>, Xallocator<std::pair<const int, int>, 10>> map_ca;
+    for (int index = 0; index < 10; index++)
+    {
+        map_ca.insert({index, factorial(index)});
+    }
+    cout << "CUSTOM MAP" << endl;
+    for (auto& it : map_ca)
+    {
+        std::cout << it.first << ' ' << it.second << endl;
+    }
+    cout << endl;
+    // custom container
+    Xvector<int, Xallocator<int, 10>> custom_vector;
+    for (int index = 0; index < 10; index++)
+    {
+        custom_vector.push_back(index);
+    }
+    cout << "CUSTOM VECTOR" << endl;
+    for (size_t index = 0; const auto& elem : custom_vector)
+    {
+        cout << index << ' ' << elem << endl;
+        index++;
+    }
     return EXIT_SUCCESS;
 }

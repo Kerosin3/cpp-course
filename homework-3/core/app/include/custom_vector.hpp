@@ -10,6 +10,7 @@ using namespace std;
 template <typename T, typename Allocator = std::allocator<T>>
 class Xvector
 {
+    static inline size_t ALLOCATE_PER_ALLOC = 1;
     using pointer = T*;
     // initialize allocator
     using xalloc = typename std::allocator_traits<Allocator>::template rebind_alloc<T>;
@@ -23,7 +24,7 @@ class Xvector
   public:
     // construct allocator
     Xvector() : m_xallocator(){};
-    ~Xvector() = default;
+    virtual ~Xvector() = default;
     [[nodiscard]] size_t size() const noexcept
     {
         return m_vsize;
@@ -39,7 +40,7 @@ class Xvector
     void push_back(const T& element)
     {
         // allocate one element via allocator
-        T* ptr_allocate = xalloc_traits::allocate(m_xallocator, 1);
+        T* ptr_allocate = xalloc_traits::allocate(m_xallocator, Xvector::ALLOCATE_PER_ALLOC);
         // place element in memory
         xalloc_traits::construct(m_xallocator, ptr_allocate, element);
         // pin first element pointer as base
