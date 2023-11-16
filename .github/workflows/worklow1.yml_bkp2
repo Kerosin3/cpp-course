@@ -8,7 +8,7 @@ on:
       - main
       - 'HW*'
 env: 
-  prj_to_test: 'homework-4'
+  prj_to_test: 'homework-3'
   deb_name: 'print_ip.deb'
 jobs:
   build-and-run-test:

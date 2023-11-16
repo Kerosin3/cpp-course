@@ -1,7 +1,7 @@
 # Assign a name to the project
 project(tests LANGUAGES CXX)
 # specify library to link with
-set(lib1_to_add "exampleLib")
+#set(lib1_to_add "exampleLib")
 # set executable output name
 set(executable_name "tests")
 # Load all the source file within the folder src
@@ -40,7 +40,7 @@ set_property(TARGET ${PROJECT_NAME} PROPERTY OUTPUT_NAME ${executable_name})
 
 #include libraries
 target_link_libraries(${PROJECT_NAME} 
-	${lib1_to_add}
+	#	${lib1_to_add}
 	gtest_main
 	gmock_main
 	Threads::Threads

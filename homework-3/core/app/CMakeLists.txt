@@ -20,7 +20,7 @@ configure_file(version.h.in version.h)
 #configure_file(version.h.in {PROJECT_SOURCE_DIR}/include/version.h)
 
 # specify library to link with
-set(lib1_to_add "exampleLib")
+#set(lib1_to_add "exampleLib")
 # set executable output name
 set(executable_name "homework-3")
 # Load all the source file within the folder src

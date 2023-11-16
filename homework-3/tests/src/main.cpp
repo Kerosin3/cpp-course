@@ -1,4 +1,4 @@
-#include "exampleLib/example_lib.hpp"
+//#include "exampleLib/example_lib.hpp"
 #include "test1.hpp"
 #include "gtest/gtest.h"
 #include <cstdlib>
