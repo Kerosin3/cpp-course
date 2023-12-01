@@ -1,3 +1,4 @@
+#include "shapes.hpp"
 #include <cstddef>
 #include <iostream>
 #include <list>
@@ -17,5 +18,6 @@ error C++ is required elif __cplusplus < 202002L error C++ 20 is required
 using namespace std;
 int main(int argc, char* argv[])
 {
+    cout << "dasd" << endl;
     return EXIT_SUCCESS;
 }
