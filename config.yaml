@@ -1,0 +1,13 @@
+#https://github.com/llvm/clangd-www/blob/main/faq.md
+#https://stackoverflow.com/questions/71472340/clangd-use-different-compiler-flags-depending-on-file-extension
+#https://stackoverflow.com/questions/76281146/how-to-use-compile-flags-txt-for-c-programming-and-suppress-c-related-issues
+CompileFlags:
+  Add: [ -Wall, -std=c++20, -Wno-missing-prototypes, -Wextra, -Wshadow, -Wconversion, -Wsign-conversion, -Wunused-parameter, -Wno-long-long, -pedantic]
+  Remove: -mabi
+Diagnostics:
+  # Tweak Clang-Tidy checks.
+  ClangTidy:
+    Add: [performance*, modernize*, readability*]
+    Remove: [modernize-use-trailing-return-type]
+    CheckOptions:
+      readability-identifier-naming.VariableCase: CamelCase
