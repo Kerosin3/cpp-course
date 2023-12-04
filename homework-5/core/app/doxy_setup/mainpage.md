@@ -1,1 +1,0 @@
-# Mainpage of project APP
