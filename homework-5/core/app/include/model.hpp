@@ -26,6 +26,11 @@ class Model
         // что то делаем
         return true;
     }
+    // проверим что добавленное ок
+    bool test_frame_ok()
+    {
+        return true;
+    }
     // добавление примитива
     bool add_shape(const std::shared_ptr<Shape>& shape_to_add)
     {
@@ -35,9 +40,9 @@ class Model
         return true;
     }
     // очистка всего поля
-    void clear() noexcept;
+    void clear() noexcept {}
     // обновить всё
-    void refresh() noexcept;
+    void refresh() noexcept {}
     // получить ид по объекта по точке
     int get_shape_at_point(const Point& some_point) noexcept;
     // получить размерность текущего документа

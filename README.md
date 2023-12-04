@@ -1,6 +1,6 @@
-# HOMEWORK-3
+# HOMEWORK-5
 
-## CUSTOM ALLOCATOR
+## MVC PATTERN
 
 ## Min. Requirements
 
@@ -23,17 +23,5 @@
 
 `cmake --build --preset linux-x64-release`
 
-
-### Testing
-
-#### Linux x86_64
-
-`ctest --test-dir ./build/linux-x64-release/homework-4`
-
-### Packing to deb
-
-`cpack --config build/linux-x64-release/CPackConfig.cmake`
-
-#### Running
-
-Execute is shell ``print_ip
+## diagram
+![](https://github.com/Kerosin3/cpp-course/blob/HW5/docs/diag.png)

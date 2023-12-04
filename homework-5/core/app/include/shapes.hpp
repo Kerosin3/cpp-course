@@ -104,12 +104,12 @@ class Point : public Shape
     std::pair<int, int> m_point_coord{};
 };
 // SIMPLE LINE
-class Line : Shape
+class Line : public Shape
 {
   public:
-    Line() = default;
+    Line() : m_first_point(Point{0, 0}), m_second_point(Point{1, 1}) {}
     ~Line() override = default;
-    explicit Line(const Point& first_coord, const Point& second_coord)
+    explicit Line(Point& first_coord, Point& second_coord)
         : m_first_point(first_coord), m_second_point(second_coord)
     {}
     virtual std::vector<SimpleCoordinate> get_coordinates() override
@@ -140,9 +140,12 @@ class Rectangle : public Shape
     std::array<Line, 4> m_lines;
 
   public:
+    Rectangle() = delete;
+    ~Rectangle() override = default;
     Rectangle(SimpleCoordinate coordinate)
     {
-        // construct simple rectangle
+        // do something simple
+        m_lines = {Line{}, Line{}, Line{}, Line{}};
     }
     explicit Rectangle(std::array<Line, 4> linez) : m_lines(linez) {}
 
