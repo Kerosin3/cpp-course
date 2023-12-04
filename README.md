@@ -24,4 +24,4 @@
 `cmake --build --preset linux-x64-release`
 
 ## diagram
-![](https://github.com/Kerosin3/cpp-course/blob/HW5/docs/diag.png)
+![](https://github.com/Kerosin3/cpp-course/blob/HW5/docs/diag.jpg)
