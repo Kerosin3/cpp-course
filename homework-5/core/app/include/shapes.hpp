@@ -1,14 +1,10 @@
 #pragma once
 #include <array>
 #include <cstddef>
-#include <exception>
-#include <expected>
 #include <iostream>
-#include <iterator>
 #include <map>
 #include <optional>
 #include <stdexcept>
-#include <utility>
 #include <vector>
 
 namespace shapes_impl
@@ -109,9 +105,7 @@ class Line : public Shape
   public:
     Line() : m_first_point(Point{0, 0}), m_second_point(Point{1, 1}) {}
     ~Line() override = default;
-    explicit Line(Point& first_coord, Point& second_coord)
-        : m_first_point(first_coord), m_second_point(second_coord)
-    {}
+    explicit Line(Point& first_coord, Point& second_coord) : m_first_point(first_coord), m_second_point(second_coord) {}
     virtual std::vector<SimpleCoordinate> get_coordinates() override
     {
         std::vector<SimpleCoordinate> vec_out{};
