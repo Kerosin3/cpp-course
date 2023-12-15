@@ -4,6 +4,8 @@
 #include <list>
 #include <map>
 #include <memory>
+#include <numeric>
+#include <optional>
 #include <stdexcept>
 #include <type_traits>
 #include <typeinfo>
@@ -32,12 +34,13 @@ class Field
     Field& operator=(U rhs)
     {
         m_value = rhs;
+        cout << "assigned" << endl;
         return *this;
     }
-    // operator U() const
-    // {
-    // return m_value;
-    // }
+    operator U() const
+    {
+        return m_value;
+    }
 
   private:
     U m_value;
@@ -50,6 +53,18 @@ class Cell
   public:
     Cell() = default;
     virtual ~Cell() = default;
+    Field<U, d_val>& operator[](int index)
+    {
+        return m_cell_map[index];
+    }
+
+    size_t get_size_c() const
+    {
+        auto fx = [&](size_t previous, const std::pair<U, Field<U, d_val>> another) {
+            return previous + 1;
+        };
+        return std::accumulate(m_cell_map.cbegin(), m_cell_map.cend(), 0, fx);
+    }
 
   private:
     // store map to cells
@@ -69,13 +84,14 @@ class AMatrix
     }
     Cell<U, d_val>& operator[](int index)
     {
-        if (m_data_matrix.contains(index))
-        {
-            return m_data_matrix.at(index);
-        }
-        m_data_matrix.insert({index, Cell<U, d_val>()});
-        cout << "inserted" << endl;
-        return m_data_matrix.at(index);
+        return m_data_matrix[index];
+    }
+    size_t size() const
+    {
+        auto fx = [&](size_t previous, const std::pair<U, Cell<U, d_val>> another) {
+            return previous + another.second.get_size_c();
+        };
+        return std::accumulate(m_data_matrix.cbegin(), m_data_matrix.cend(), 0, fx);
     }
 
   private:
@@ -87,6 +103,12 @@ int main(int argc, char* argv[])
 {
     cout << "program starts" << endl;
     AMatrix<int, -1> my_matrix{};
-    my_matrix[10];
+    my_matrix[10][1] = 10;
+    my_matrix[10][2] = 11;
+    my_matrix[10][3] = 12;
+    my_matrix[1][3] = 13;
+    cout << "value is " << my_matrix[10][3] << endl;
+    // my_matrix[1][2] = 11;
+    cout << my_matrix.size() << endl;
     return EXIT_SUCCESS;
 }
