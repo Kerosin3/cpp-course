@@ -8,8 +8,8 @@ on:
       - main
       - 'HW*'
 env: 
-  prj_to_test: 'homework-5'
-  deb_name: 'homework-5.deb'
+  prj_to_test: 'homework-6'
+  deb_name: 'homework-6.deb'
 jobs:
   build-and-run-test:
     runs-on: ubuntu-latest

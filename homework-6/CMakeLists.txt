@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.25)
 
 set(CMAKE_GENERATOR "Ninja" CACHE INTERNAL "" FORCE)
 
-set(CMAKE_PROJECT_NAME "homework-5")
+set(CMAKE_PROJECT_NAME "homework-6")
 #set(PATCH_VERSION "1" CACHE INTERNAL "Patch version")
 set(MINOR_VERSION "0" CACHE INTERNAL "Minor version")
 set(MAJOR_VERSION "1" CACHE INTERNAL "Major version")
