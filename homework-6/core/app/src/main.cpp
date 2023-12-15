@@ -32,12 +32,12 @@ class Field
     Field& operator=(U rhs)
     {
         m_value = rhs;
-        return *this; // ?
+        return *this;
     }
-    operator U() const
-    {
-        return m_value;
-    }
+    // operator U() const
+    // {
+    // return m_value;
+    // }
 
   private:
     U m_value;
@@ -53,7 +53,7 @@ class Cell
 
   private:
     // store map to cells
-    static std::map<U, Field<U, d_val>> m_cell_map;
+    std::map<U, Field<U, d_val>> m_cell_map;
 };
 
 template <typename U, U d_val>
@@ -67,14 +67,26 @@ class AMatrix
     {
         return 0;
     }
+    Cell<U, d_val>& operator[](int index)
+    {
+        if (m_data_matrix.contains(index))
+        {
+            return m_data_matrix.at(index);
+        }
+        m_data_matrix.insert({index, Cell<U, d_val>()});
+        cout << "inserted" << endl;
+        return m_data_matrix.at(index);
+    }
 
   private:
     // store map to cells
-    static std::map<U, Cell<U, d_val>> m_data_matrix;
+    std::map<U, Cell<U, d_val>> m_data_matrix;
 };
 
 int main(int argc, char* argv[])
 {
     cout << "program starts" << endl;
+    AMatrix<int, -1> my_matrix{};
+    my_matrix[10];
     return EXIT_SUCCESS;
 }
