@@ -1,6 +1,6 @@
-# HOMEWORK-5
+# HOMEWORK-6
 
-## MVC PATTERN
+## ENDLESS MATRIX
 
 ## Min. Requirements
 
@@ -8,6 +8,7 @@
 + Ninja 1.10
 + Cmake 3.25
 + C++20 support compiler
++ C++ fmt library
 
 ### Configure
 
@@ -22,6 +23,3 @@
 #### Linux x86_64
 
 `cmake --build --preset linux-x64-release`
-
-## diagram
-![](https://github.com/Kerosin3/cpp-course/blob/HW5/docs/diag.jpg)

@@ -1,6 +1,7 @@
 #pragma once
-#include <map>
 #include <concepts>
+#include <format>
+#include <map>
 #include <numeric>
 
 template <typename U, U d_val>
@@ -26,6 +27,15 @@ class Field
 };
 
 template <typename U, U d_val>
+struct std::formatter<Field<U, d_val>> : std::formatter<std::string>
+{
+    auto format(Field<U, d_val> some_field, format_context& ctx) const
+    {
+        return formatter<string>::format(std::format("{}", some_field.operator U()), ctx);
+    }
+};
+
+template <typename U, U d_val>
 requires std::integral<U>
 class Cell
 {
@@ -34,13 +44,15 @@ class Cell
     virtual ~Cell() = default;
     Field<U, d_val>& operator[](int index)
     {
+        // create or return
         return m_cell_map[index];
     }
 
     int get_size_c() const
     {
-        auto fx = [](size_t accum, std::pair<U, Field<U, d_val>> another) {
-            return accum + 1;
+        auto fx = [](U accum, std::pair<U, Field<U, d_val>> another) {
+            // do not count if default value
+            return (another.second == d_val) ? accum : accum + 1;
         };
         return std::accumulate(m_cell_map.cbegin(), m_cell_map.cend(), 0, fx);
     }
@@ -57,17 +69,14 @@ class AMatrix
   public:
     AMatrix() = default;
     virtual ~AMatrix() = default;
-    size_t get_size() const
-    {
-        return 0;
-    }
     Cell<U, d_val>& operator[](int index)
     {
+        // create or return
         return m_data_matrix[index];
     }
     int size() const
     {
-        auto fx = [](size_t accum, std::pair<U, Cell<U, d_val>> another) {
+        auto fx = [](U accum, std::pair<U, Cell<U, d_val>> another) {
             return accum + another.second.get_size_c();
         };
         return std::accumulate(m_data_matrix.cbegin(), m_data_matrix.cend(), 0, fx);
