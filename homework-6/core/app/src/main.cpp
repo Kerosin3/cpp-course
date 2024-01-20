@@ -24,7 +24,7 @@ error C++ is required elif __cplusplus < 202002L error C++ 20 is required
     // assign matrix with 20 values
     for (int i = 0; i < size_of_matrix; i++)
     {
-        for ( ;j < size_of_matrix; j++)
+        for (j = 0; j < size_of_matrix; j++)
         {
             // if direct or reverse diagonal -> assign and print
             if ((j == i) || (j == (size_of_matrix - 1) - i))
@@ -32,18 +32,16 @@ error C++ is required elif __cplusplus < 202002L error C++ 20 is required
                 my_matrix[i][j] = j;
                 // write assigned values
                 stream_out << std::format(" [{}][{}]=>{}\n", i, j, my_matrix[i][j]);
-                // skip printing riest and last row and column
-                if (!(i == 0 || i == (size_of_matrix - 1) || j == 0 || j == (size_of_matrix - 1)))
-                    std::cout << " " << my_matrix[i][j];
-            }
-            else
-            {
-                // skip printing riest and last row and column
-                    if (!(i == 0 || i == (size_of_matrix - 1) || j == 0 || j == (size_of_matrix - 1)))
-                        std::cout << " 0";
             }
         }
-        j = 0;
+    }
+
+    for (int i = 1; i < size_of_matrix - 1; i++)
+    {
+        for (j = 1; j < size_of_matrix - 1; j++)
+        {
+            std::cout << " " << my_matrix[i][j];
+        }
         std::cout << std::endl;
     }
     std::cout << stream_out.str() << std::endl;
