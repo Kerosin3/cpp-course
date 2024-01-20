@@ -39,7 +39,6 @@ error C++ is required elif __cplusplus < 202002L error C++ 20 is required
             else
             {
                 // skip printing riest and last row and column
-                if (!(i == 0 || i == (size_of_matrix - 1) || j == 0 || j == (size_of_matrix - 1)))
                     if (!(i == 0 || i == (size_of_matrix - 1) || j == 0 || j == (size_of_matrix - 1)))
                         std::cout << " 0";
             }
@@ -48,6 +47,6 @@ error C++ is required elif __cplusplus < 202002L error C++ 20 is required
         std::cout << std::endl;
     }
     std::cout << stream_out.str() << std::endl;
-    std::cout << " size of matrix (non-default values): " << my_matrix.size() << std::endl;
+    std::cout << " size of matrix (non-default values): " << my_matrix.get_size() << std::endl;
     return EXIT_SUCCESS;
 }

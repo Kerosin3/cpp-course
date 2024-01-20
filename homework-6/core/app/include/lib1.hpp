@@ -4,85 +4,94 @@
 #include <map>
 #include <numeric>
 
-template <typename U, U d_val>
-requires std::integral<U>
-class Field
-{
-  public:
-    Field() = default;
-    virtual ~Field() = default;
+template <typename T, T def_val>
+class RowProxy;
 
-    Field& operator=(U rhs)
-    {
-        m_value = rhs;
-        return *this;
-    }
-    operator U() const
-    {
-        return m_value;
-    }
+template <typename T, T def_val>
 
-  private:
-    U m_value;
-};
-
-template <typename U, U d_val>
-struct std::formatter<Field<U, d_val>> : std::formatter<std::string>
-{
-    auto format(Field<U, d_val> some_field, format_context& ctx) const
-    {
-        return formatter<string>::format(std::format("{}", some_field.operator U()), ctx);
-    }
-};
-
-template <typename U, U d_val>
-requires std::integral<U>
-class Cell
-{
-  public:
-    Cell() = default;
-    virtual ~Cell() = default;
-    Field<U, d_val>& operator[](int index)
-    {
-        // create or return
-        return m_cell_map[index];
-    }
-
-    int get_size_c() const
-    {
-        auto fx = [](U accum, std::pair<U, Field<U, d_val>> another) {
-            // do not count if default value
-            return (another.second == d_val) ? accum : accum + 1;
-        };
-        return std::accumulate(m_cell_map.cbegin(), m_cell_map.cend(), 0, fx);
-    }
-
-  private:
-    // store map to cells
-    std::map<U, Field<U, d_val>> m_cell_map;
-};
-
-template <typename U, U d_val>
-requires std::integral<U>
+/// main maxtrix class
 class AMatrix
 {
+    using Element = std::pair<T, T>;
+
   public:
     AMatrix() = default;
     virtual ~AMatrix() = default;
-    Cell<U, d_val>& operator[](int index)
+    // return Proxy Row when acessing row
+    auto operator[](int index) -> RowProxy<T, def_val>
     {
-        // create or return
-        return m_data_matrix[index];
+        return RowProxy(this, index);
     }
-    int size() const
+    int get_size()
     {
-        auto fx = [](U accum, std::pair<U, Cell<U, d_val>> another) {
-            return accum + another.second.get_size_c();
-        };
-        return std::accumulate(m_data_matrix.cbegin(), m_data_matrix.cend(), 0, fx);
+        return m_matrix.size();
+    }
+    // add non-default element or erase when assigning default value
+    void add_element(Element elem, T value)
+    {
+        if (value != def_val)
+        {
+            this->m_matrix[elem] = value;
+        }
+        // erase if we assigning the default value
+        else if (this->m_matrix.contains(elem))
+        {
+            this->m_matrix.erase(elem);
+        }
+    }
+    // get element or default value
+    auto get_element(Element elem) -> T
+    {
+        return (!this->m_matrix.contains(elem)) ? def_val : this->m_matrix[elem];
     }
 
   private:
-    // store map to cells
-    std::map<U, Cell<U, d_val>> m_data_matrix;
+    std::map<Element, T> m_matrix;
+};
+
+template <typename T, T def_val>
+// Proxy class
+class RowProxy
+{
+
+    using Element = std::pair<T, T>;
+
+  public:
+    RowProxy() = delete;
+    virtual ~RowProxy() = default;
+    // construct default proxy obj when acessing row
+    RowProxy(AMatrix<T, def_val>* mtrx, int val) : m_matrix(mtrx)
+    {
+        this->m_data_row_column = std::make_pair(val, 0);
+    }
+    // assign data by row and column
+    RowProxy& operator=(T value)
+    {
+        this->m_matrix->add_element(m_data_row_column, value);
+        return *this;
+    }
+
+    // set column
+    RowProxy& operator[](int column)
+    {
+        this->m_data_row_column.second = column;
+        return *this;
+    }
+    operator T()
+    {
+        return this->m_matrix->get_element(m_data_row_column);
+    }
+
+  private:
+    Element m_data_row_column;
+    AMatrix<T, def_val>* m_matrix;
+};
+
+template <typename U, U d_val>
+struct std::formatter<RowProxy<U, d_val>> : std::formatter<std::string>
+{
+    auto format(RowProxy<U, d_val> some_field, format_context& ctx) const
+    {
+        return formatter<string>::format(std::format("{}", some_field.operator U()), ctx);
+    }
 };
