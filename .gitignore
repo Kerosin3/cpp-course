@@ -7,7 +7,6 @@ build/
 _build/
 cmake-build-*/
 prefix/
-.clangd
 CMakeLists.txt.user
 CMakeUserPresets.json
 compile_commands.json
