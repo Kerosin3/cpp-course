@@ -1,12 +1,15 @@
 #include <algorithm>
 #include <string>
+
 #include "setup.hpp"
+
 #include "finder.hpp"
 
 bool
 setupFinder(int ac, char** av)
 {
   try {
+    // clang-format off
     po::options_description desc("Allowed options");
     desc.add_options()("help", "produce help message")
     ("dirs,d",po::value< std::vector< std::string > >()->multitoken()->required(),"directoris to scan")
@@ -17,7 +20,7 @@ setupFinder(int ac, char** av)
     ("filter out filenames,f",po::value< std::vector< std::string >>()->multitoken(),"set filenames to filter out") 
     ("target files,t",po::value< std::vector< std::string > >()->multitoken(),"setup target files to analyze")
     ("blocksize,b",po::value< size_t >()->default_value(1024),"read block size,bytes");
-
+    // clang-format on
     po::variables_map vm;
     po::store(po::parse_command_line(ac, av, desc), vm);
 
@@ -60,12 +63,13 @@ setupFinder(int ac, char** av)
     app.setupBlockSize(blocksize);
     // setup filtering
     if (vm.count("filter out filenames")) {
-      auto filter_out = vm["filter out filenames"].as< std::vector<std::string >>();
+      auto filter_out =
+          vm["filter out filenames"].as< std::vector< std::string > >();
       app.setupFilter(std::move(filter_out));
     } else {
       cout << "filtering is not set.\n";
     }
-    //target files
+    // target files
     if (vm.count("target files")) {
       auto target_files = vm["target files"].as< std::vector< std::string > >();
       app.setupTargetFiles(std::move(target_files));
@@ -73,12 +77,16 @@ setupFinder(int ac, char** av)
       cout << "target files are not set.\n";
     }
     if (vm.count("hashing method")) {
-      std::string method =
-        vm["hashing method"].as<  std::string  >();
-      if (method == "MD5")
+      std::string method = vm["hashing method"].as< std::string >();
+      if (method == "MD5") {
         app.setupHashingMethod(false);
-    } else{
+        std::cout << "using MD5\n";
+      } else {
+        std::cout << "using CRC32\n";
+      }
+    } else {
       app.setupHashingMethod(true);
+      std::cout << "using CRC32\n";
     }
     cout << "\n";
     app.printDuplicates(app.getDuplicates());

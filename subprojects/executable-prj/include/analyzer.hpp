@@ -81,9 +81,11 @@ public:
 private:
   Holder(std::string& filename,
          ssize_t p_blocksize,
-         std::shared_ptr< std::vector< char > > ptr, bool hashmethod)
+         std::shared_ptr< std::vector< char > > ptr,
+         bool hashmethod)
       : m_filename {filename}
-      , m_buf {ptr}, hashing_method(hashmethod)
+      , m_buf {ptr}
+      , hashing_method(hashmethod)
   {
 
     Holder::m_blocksize = p_blocksize;
@@ -93,7 +95,8 @@ public:
   explicit Holder(std::string& filename,
                   std::shared_ptr< std::vector< char > > ptr,
                   ssize_t p_blocksize,
-                  ssize_t serial, bool hm)
+                  ssize_t serial,
+                  bool hm)
       : Holder {filename, p_blocksize, ptr, hm}
   {
     m_serial = serial;
@@ -161,8 +164,11 @@ class FileFactory
   FileFactory() = delete;
 
 public:
-  FileFactory(std::shared_ptr< std::vector< char > > buf, ssize_t p_blocksize, bool mh)
-      : factory_buf {buf}, hashing_mehtod(mh)
+  FileFactory(std::shared_ptr< std::vector< char > > buf,
+              ssize_t p_blocksize,
+              bool mh)
+      : factory_buf {buf}
+      , hashing_mehtod(mh)
   {
     FileFactory::m_blocksize = p_blocksize;
   }
@@ -180,7 +186,10 @@ public:
   {
     if (!std::filesystem::exists(fname))
       throw std::runtime_error(fname + " not exists");
-    return Holder {
-        fname, factory_buf, FileFactory::m_blocksize, ++m_opened_files, hashing_mehtod};
+    return Holder {fname,
+                   factory_buf,
+                   FileFactory::m_blocksize,
+                   ++m_opened_files,
+                   hashing_mehtod};
   }
 };
