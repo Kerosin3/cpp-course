@@ -28,7 +28,8 @@
   -i [ --idirs ] arg                   set exclude directories
   -l [ --level ] arg (=1)              recursive search
   -h [ --hashing method ] arg (=CRC32) MD5, CRC32
-  -f [ --filter out filenames ] arg    set filename to filter out
-  -t [ --target file ] arg             setup target file to analyze
+  -f [ --filter out filenames ] arg    set filenames to filter out
+  -t [ --target files ] arg            setup target files to analyze
   -b [ --blocksize ] arg (=1024)       read block size,bytes
+
 ```

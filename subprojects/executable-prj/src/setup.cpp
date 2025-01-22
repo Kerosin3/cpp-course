@@ -14,8 +14,8 @@ setupFinder(int ac, char** av)
     ("idirs,i",po::value< std::vector< std::string > >()->multitoken(),"set exclude directories")
     ("level,l",po::value< bool >()->default_value(true),"recursive search")
     ("hashing method,h",po::value< std::string >()->default_value("CRC32"),"MD5, CRC32")
-    ("filter out filenames,f",po::value< std::vector< std::string >>()->multitoken(),"set filename to filter out") 
-    ("target file,t",po::value< std::vector< std::string > >()->multitoken(),"setup target file to analyze")
+    ("filter out filenames,f",po::value< std::vector< std::string >>()->multitoken(),"set filenames to filter out") 
+    ("target files,t",po::value< std::vector< std::string > >()->multitoken(),"setup target files to analyze")
     ("blocksize,b",po::value< size_t >()->default_value(1024),"read block size,bytes");
 
     po::variables_map vm;
@@ -66,8 +66,8 @@ setupFinder(int ac, char** av)
       cout << "filtering is not set.\n";
     }
     //target files
-    if (vm.count("target file")) {
-      auto target_files = vm["target file"].as< std::vector< std::string > >();
+    if (vm.count("target files")) {
+      auto target_files = vm["target files"].as< std::vector< std::string > >();
       app.setupTargetFiles(std::move(target_files));
     } else {
       cout << "target files are not set.\n";

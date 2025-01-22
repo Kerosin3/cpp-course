@@ -152,14 +152,19 @@ finder::Finder::filterFilenames(std::vector< std::string >&& v_strings)
 void
 finder::Finder::setupTargetFiles(std::vector< std::string >&& v_strings)
 {
+  std::vector< std::string > paths_to_analysis {};
   for (const auto& file_to_analyze : v_strings) {
-    std::erase_if(m_filespaths,
-                  [&](const auto& fpath)
-                  {
-                    return (!fs::path(fpath).filename().string().contains(
-                        file_to_analyze));
-                  });
+    std::for_each(
+        m_filespaths.begin(),
+        m_filespaths.end(),
+        [&](const auto& fpath)
+        {
+          if (fs::path(fpath).filename().string().contains(file_to_analyze)) {
+            paths_to_analysis.push_back(fpath);
+          }
+        });
   }
+  m_filespaths = std::move(paths_to_analysis);
 }
 
 // main function to find duplicates
@@ -281,7 +286,7 @@ finder::Finder::setupHashingMethod(bool method)
 }
 
 void
-finder::Finder::setupFilter(std::vector<std::string>&& filter_str)
+finder::Finder::setupFilter(std::vector< std::string >&& filter_str)
 {
   if (!filter_str.empty()) {
     filterFilenames(std::move(filter_str));
