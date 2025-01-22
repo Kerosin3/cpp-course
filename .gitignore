@@ -4,13 +4,14 @@
 .vscode/
 _deb/
 build/
+.cache/
 _build/
 cmake-build-*/
 prefix/
-.clangd
 CMakeLists.txt.user
 CMakeUserPresets.json
-compile_commands.json
 contrib/
 docs/app/*
 Testing/
+!*.wrap
+*.log

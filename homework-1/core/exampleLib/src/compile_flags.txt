@@ -1,8 +1,0 @@
--I
-../include
--I
-../exampleLib/include
--I
-../../../contrib/fmt-src/include
--I
-../../../contrib/spdlog-src/include
