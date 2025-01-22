@@ -14,7 +14,7 @@ setupFinder(int ac, char** av)
     ("idirs,i",po::value< std::vector< std::string > >()->multitoken(),"set exclude directories")
     ("level,l",po::value< bool >()->default_value(true),"recursive search")
     ("hashing method,h",po::value< std::string >()->default_value("CRC32"),"MD5, CRC32")
-    ("filter filename pattern,f",po::value< std::string >(),"set filename to filter out") 
+    ("filter out filenames,f",po::value< std::vector< std::string >>()->multitoken(),"set filename to filter out") 
     ("target file,t",po::value< std::vector< std::string > >()->multitoken(),"setup target file to analyze")
     ("blocksize,b",po::value< size_t >()->default_value(1024),"read block size,bytes");
 
@@ -59,15 +59,15 @@ setupFinder(int ac, char** av)
     auto blocksize = vm["blocksize"].as< size_t >();
     app.setupBlockSize(blocksize);
     // setup filtering
-    if (vm.count("filter pattern")) {
-      auto rec_search = vm["filter pattern"].as< std::string >();
-      app.setupFilter(std::move(rec_search));
+    if (vm.count("filter out filenames")) {
+      auto filter_out = vm["filter out filenames"].as< std::vector<std::string >>();
+      app.setupFilter(std::move(filter_out));
     } else {
-      cout << "filtering is not set.\n"; //there is default !
+      cout << "filtering is not set.\n";
     }
     //target files
-    if (vm.count("target files")) {
-      auto target_files = vm["target files"].as< std::vector< std::string > >();
+    if (vm.count("target file")) {
+      auto target_files = vm["target file"].as< std::vector< std::string > >();
       app.setupTargetFiles(std::move(target_files));
     } else {
       cout << "target files are not set.\n";

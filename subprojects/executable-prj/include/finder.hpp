@@ -69,9 +69,9 @@ namespace finder
 
     void setupTargetFiles(std::vector<std::string>&&);
 
-    void setupFilter(std::string&&);
+    void setupFilter(std::vector<std::string>&&);
 
-    void filterFilenames(std::string&&);
+    void filterFilenames(std::vector< std::string >&& v_strings);
 
     void filerBySize();
 

@@ -21,14 +21,14 @@
 
 + program cli arguments:
 ```
-Allowed options:
+ Allowed options:
   --help                               produce help message
   -d [ --dirs ] arg                    directoris to scan
   -m [ --minfile ] arg (=1)            set min filesize to index,bytes
   -i [ --idirs ] arg                   set exclude directories
   -l [ --level ] arg (=1)              recursive search
   -h [ --hashing method ] arg (=CRC32) MD5, CRC32
-  -f [ --filter filename pattern ] arg set filename to filter out
+  -f [ --filter out filenames ] arg    set filename to filter out
   -t [ --target file ] arg             setup target file to analyze
   -b [ --blocksize ] arg (=1024)       read block size,bytes
 ```

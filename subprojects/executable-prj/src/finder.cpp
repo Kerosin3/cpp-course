@@ -1,5 +1,7 @@
 #include "finder.hpp"
 
+#include <boost/filesystem/path.hpp>
+
 namespace fs = boost::filesystem;
 
 template< typename T >
@@ -134,16 +136,17 @@ ToLowerCase(std::string msv) noexcept
 }
 
 void
-finder::Finder::filterFilenames(std::string&& filter_str)
+finder::Finder::filterFilenames(std::vector< std::string >&& v_strings)
 {
-  const auto& upper = ToUpperCase(filter_str);
-  const auto& lower = ToLowerCase(filter_str);
-  std::erase_if(m_filespaths,
-                [&](const auto& fpath)
-                {
-                  return (fpath.contains(filter_str) || fpath.contains(upper)
-                          || fpath.contains(lower));
-                });
+
+  for (const auto& file_to_analyze : v_strings) {
+    std::erase_if(m_filespaths,
+                  [&](const auto& fpath)
+                  {
+                    return (fs::path(fpath).filename().string().contains(
+                        file_to_analyze));
+                  });
+  }
 }
 
 void
@@ -153,7 +156,7 @@ finder::Finder::setupTargetFiles(std::vector< std::string >&& v_strings)
     std::erase_if(m_filespaths,
                   [&](const auto& fpath)
                   {
-                    return !(fs::path(fpath).filename().string().contains(
+                    return (!fs::path(fpath).filename().string().contains(
                         file_to_analyze));
                   });
   }
@@ -278,7 +281,7 @@ finder::Finder::setupHashingMethod(bool method)
 }
 
 void
-finder::Finder::setupFilter(std::string&& filter_str)
+finder::Finder::setupFilter(std::vector<std::string>&& filter_str)
 {
   if (!filter_str.empty()) {
     filterFilenames(std::move(filter_str));
