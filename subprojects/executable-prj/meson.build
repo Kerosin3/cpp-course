@@ -5,6 +5,7 @@ project('bayan', 'cpp',
     'build.cpp_std=c++2b',
     'warning_level=2',
     'buildtype=release',
+    'strip=true',
     'b_ndebug=if-release',
     'force_fallback_for=wlroots,libliftoff,vkroots'
   ],
@@ -26,9 +27,12 @@ add_project_arguments(cppc.get_supported_arguments([
   '-Wno-sign-compare'
 ]), language: 'cpp')
 
-add_project_arguments(cppc.get_supported_arguments([
-  '-ffast-math',
-]), language: 'cpp')
+add_project_link_arguments(
+  '-static-libgcc',
+  '-static-libstdc++',
+  '-static',
+  language: 'cpp',
+)
 ######################################################
 # add include dir
 incdir = include_directories('include')
@@ -44,7 +48,7 @@ boost_dep = dependency('boost',version: '>=1.83.0',include_type: 'system',
                                     'log_setup',
                                     'log', 
                                     'date_time',
-                                    'system' ])
+                                    'system' ], static: true )
 #############################################################
 executable(
   meson.project_name(), 
