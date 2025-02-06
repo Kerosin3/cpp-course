@@ -10,8 +10,11 @@ cmake-build-*/
 prefix/
 CMakeLists.txt.user
 CMakeUserPresets.json
+compile_commands.json
 contrib/
 docs/app/*
+173*
+bulk*
 Testing/
 !*.wrap
 *.log
