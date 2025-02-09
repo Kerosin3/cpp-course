@@ -55,7 +55,7 @@ sources = []
 # add sources from src dir
 subdir('src')
 # add boost
-boost_dep = dependency('boost',version: '>=1.83.0',include_type: 'system',
+boost_dep = dependency('boost',version: '>=1.83.0',include_type: 'system', static: true,
                         modules : [ 'thread',
                                     'filesystem',
                                     'program_options',

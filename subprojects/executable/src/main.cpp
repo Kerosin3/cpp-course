@@ -7,6 +7,20 @@
 
 int main(int argc, char* argv[])
 {
+    if (argc != 2)
+    {
+        fprintf(stderr, "usage: mbulk <blocksize>\n");
+        return EXIT_FAILURE;
+    }
+    int blockSize = atoi(argv[1]);
+    auto* handler = async::connect(blockSize);
+    async::receive(handler);
+    async::disconnect(handler);
+
+
+    return EXIT_SUCCESS;
+
+#if defined(debug)
     // same blocks (block =3)
     std::string data1 =
         "cmd1\ncmd2\n"
@@ -42,5 +56,5 @@ int main(int argc, char* argv[])
     // join second thread
     thr.join();
     async::disconnect(handler);
-    return EXIT_SUCCESS;
+#endif
 }

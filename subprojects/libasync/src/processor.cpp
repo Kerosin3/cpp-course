@@ -136,6 +136,24 @@ void Proc::ProcessorHub::receive_input(std::string& sdata)
     m_cmdProcessor.cv_data.notify_all();
 }
 
+void Proc::ProcessorHub::receive_input()
+{
+    if (!initialized)
+    {
+        readerStart();
+        printersStart();
+    }
+    initialized = true;
+    m_cmdProcessor.input_aquired = true;
+    m_cmdProcessor.cv_data.notify_all();
+    std::unique_lock lock(m_cmdProcessor.cmd_data_mtx);
+    m_cmdProcessor.cv_data.wait(lock, [this] {
+        return m_cmdProcessor.input_processed;
+    });
+    m_cmdProcessor.input_processed = false;
+    m_cmdProcessor.cv_data.notify_all();
+}
+
 ProcessorHub::~ProcessorHub()
 {
     m_cmdProcessor.input_processed = false;

@@ -40,7 +40,6 @@ struct CmdProcessor
     {
         consPrinter.run();
     }
-
     void initialize();
 };
 
@@ -63,6 +62,7 @@ class ProcessorHub
     bool initialized{false};
 
   public:
+    // use with string input
     explicit ProcessorHub(size_t blocksize) :
         data{std::make_shared<CmdQueqe>(CmdQueqe{})}, m_blocksize(blocksize),
         r_thr(std::make_unique<std::thread>(std::thread{})),
@@ -73,6 +73,19 @@ class ProcessorHub
         p_thr2(std::make_unique<std::thread>(std::thread{})),
         filePrinter2{data, cvx, p_thr2, PRINTER2_SERIAL, blocksize, writerSlock}
     {}
+    // use with cin
+    explicit ProcessorHub(size_t blocksize, std::istream& dsource) :
+        data{std::make_shared<CmdQueqe>(CmdQueqe{})}, m_blocksize(blocksize),
+        r_thr(std::make_unique<std::thread>(std::thread{})),
+        m_cmdProcessor{data, cvx, r_thr, datasource, blocksize},
+        p_thr1(std::make_unique<std::thread>(std::thread{})),
+        filePrinter1{data,      cvx,        p_thr1, PRINTER1_SERIAL,
+                     blocksize, writerSlock},
+        p_thr2(std::make_unique<std::thread>(std::thread{})),
+        filePrinter2{data, cvx, p_thr2, PRINTER2_SERIAL, blocksize, writerSlock}
+    {
+        datasource.basic_ios::rdbuf(dsource.rdbuf());
+    }
     ProcessorHub& operator=(ProcessorHub&&) = delete;
     ProcessorHub& operator=(ProcessorHub) = delete;
     ProcessorHub(ProcessorHub&) = delete;
@@ -88,6 +101,7 @@ class ProcessorHub
     }
     void finish();
     void receive_input(std::string& sdata);
+    void receive_input();
     ~ProcessorHub();
 };
 

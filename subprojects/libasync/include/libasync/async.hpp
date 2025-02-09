@@ -18,7 +18,7 @@ void
 receive(handle_t handle, const char* data, std::size_t size);
 
 void
-receiveCin(handle_t handle);
+receive(handle_t handle);
 
 void
 disconnect(handle_t handle);
